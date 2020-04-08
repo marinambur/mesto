@@ -1,0 +1,15 @@
+.grid__container {
+    display: -ms-grid;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 16px 16px;
+    align-self: auto;
+    justify-self: auto;
+    width: calc(100% - 398px);
+    margin-top: 102px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: auto;
+    max-width: 1184px;
+}

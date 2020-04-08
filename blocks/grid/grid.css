@@ -1,0 +1,10 @@
+@import url(./__item/grid__item.css);
+@import url(./__container/grid__container.css);
+@import url(./__text/grid__text.css);
+@import url(./__box/grid__box.css);
+.grid {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 100%;
+}
