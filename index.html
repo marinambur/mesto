@@ -10,6 +10,22 @@
 
 <body>
     <div class="page">
+        <div class="popup">
+            <img class="button-close" src="./images/Close_button.png" alt="Закрыть всплывающее окно">
+            <div class="popup__container">
+
+                <form class="form">
+                    <h3 class="form__heading">Редактировать профиль</h3>
+                    <fieldset class="form__name">
+                        <input class="form__name-input" type="text" name="firstname" value="Жак-Ив Кусто">
+                    </fieldset>
+                    <fieldset class="form__profession">
+                        <input class="form__profession-input" type="text" name="firstname" value="Исследователь океана">
+                    </fieldset>
+                    <button type="submit" class="form__button_save"></button>
+                </form>
+            </div>
+        </div>
         <header class="header">
             <div class="header__container"><img class="header__logo" src="./images/logo.svg" alt="Логотип Россия" />
             </div>
@@ -19,14 +35,14 @@
             <img class="profile__avatar" src="./images/kusto_pic.jpg" alt="Портрет Кусто">
             <div class="profile__container">
                 <div class="profile__info">
-                    <h3 class="profile__title">Жак-Ив Кусто</h3>
-                    <p class="profile__subtitle">Исследователь океана</p>
-                </div>
-                <div class="profile__buttons">
+                    <h3 class="profile__title" id="profile__title">Жак-Ив Кусто</h3>
                     <button class="profile__button-small"></button>
-                    <button class="profile__button-large"></button>
                 </div>
+                <p class="profile__subtitle" id="profile__subtitle">Исследователь океана</p>
             </div>
+            <button class="profile__button-large"></button>
+
+
         </section>
         <section class="grid">
             <div class="grid__container">
@@ -84,6 +100,7 @@
             <p class="footer__copyright">© 2020 Mesto Russia</p>
         </footer>
     </div>
+    <script src="./script.js"></script>
 </body>
 
 </html>
