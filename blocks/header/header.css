@@ -1,0 +1,6 @@
+@import url(./__logo/header__logo.css);
+@import url(./__container/header__container.css);
+.header {
+    max-width: 1280px;
+    margin: auto;
+}

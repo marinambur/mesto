@@ -1,0 +1,8 @@
+.profile__button-large {
+    width: 150px;
+    height: 50px;
+    background-image: url('../../../images/Add_button.svg');
+    background-color: black;
+    border: 2px solid #FFFFFF;
+    margin-top: 38px;
+}
