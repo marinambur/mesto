@@ -1,9 +1,18 @@
 @import url(./__container/popup__container.css);
 @import url(./_opened/popup_opened.css);
+@import url(./__button-close/popup__button-close.css);
+
+
 .popup {
-    display: flex;
     justify-content: center;
-    padding-top: 195px;
+    padding-top: 102px;
     display: none;
     position: absolute;
+    background: rgba(0, 0, 0, .5);
+    width: 100%;
+    position: fixed;
+    height: 100%;
+    top: 0;
+    right: 0;
 }
+

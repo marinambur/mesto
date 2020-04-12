@@ -4,7 +4,7 @@
 
 
 let button = document.querySelector('.profile__button-small');
-let button_close = document.querySelector('.button-close');
+let close = document.querySelector('.popup__button-close');
 
 
 let popup = document.querySelector('.popup')
@@ -22,9 +22,9 @@ function closePopup() {
     popup.classList.remove('popup_opened');
 }
 
-button_close.addEventListener('click', closePopup);
+close.addEventListener('click', closePopup);
 
-console.log(typeof (document.querySelector('.button-close')));
+console.log(typeof (document.querySelector('.popup__button-close')));
 
 // Находим форму в DOM
 let formElement = popup.querySelector('.form'); // Воспользуйтесь методом querySelector()
@@ -40,8 +40,11 @@ function formSubmitHandler(evt) {
     let nameInput = popup.querySelector('.form__name-input');    // Воспользуйтесь инструментом .querySelector()
     let jobInput = popup.querySelector('.form__profession-input');// Воспользуйтесь инструментом .querySelector()
 
-    console.log(nameInput.value);
-    console.log(jobInput.value);
+    nameInput.getAttribute('value');
+    jobInput.getAttribute('value');
+
+    /*console.log(nameInput.value);
+    console.log(jobInput.value);*/
     // Получите значение полей из свойства value
     let profile__title = document.getElementById('profile__title');
     let profile__subtitle = document.getElementById('profile__subtitle');
@@ -58,7 +61,6 @@ function closePopup() {
     popup.classList.remove('popup_opened');
 }
 form__button_save.addEventListener('click', closePopup);
-// Прикрепляем обработчик к форме:
-// он будет следить за событием “submit” - «отправка»
+
 formElement.addEventListener('submit', formSubmitHandler);
 

@@ -7,13 +7,13 @@
 @import url(./__button-small/profile__button-small.css);
 @import url(./__button-large/profile__button-large.css);
 .profile {
-    width: calc(100% - 398px);
     margin: 36px auto 47.25px auto;
     display: flex;
-    width: 66.9%;
+    width: 68.9%;
+    justify-content: space-between;
 }
 
-@media (max-width: 1150px) {
+@media (max-width: 1080px) {
     .profile {
         flex-direction: column;
         align-items: center;

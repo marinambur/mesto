@@ -1,8 +1,16 @@
 .form__name {
-    padding: 57px 0 0;
+    padding: 54px 0 0;
     border-style: none;
-    opacity: 0.2;
-    border-bottom: 1px solid #000000;
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
     width: 358px;
-    margin: auto;
+    font-family: Inter;
+    font-size: 14px;
+    line-height: 17px;
+    padding-bottom: 5px;
+}
+
+@media (max-width: 503px) {
+    .form__name {
+        width: 220px;
+    }
 }
