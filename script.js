@@ -5,6 +5,16 @@
 
 let button = document.querySelector('.profile__button-small');
 let close = document.querySelector('.popup__button-close');
+let nameInput = document.querySelector('.form__name-input');
+let jobInput = document.querySelector('.form__profession-input');
+let profile__title = document.getElementById('profile__title');
+let profile__subtitle = document.getElementById('profile__subtitle');
+profile__title.getAttribute('value');
+profile__subtitle.getAttribute('value');
+
+// Выберите элементы, куда должны быть вставлены значения полей
+
+
 
 
 let popup = document.querySelector('.popup')
@@ -12,6 +22,9 @@ let popup = document.querySelector('.popup')
 function showPopup() {
     let popup = document.querySelector('.popup');
     popup.classList.add('popup_opened');
+    nameInput.value = profile__title.textContent;
+    jobInput.value = profile__subtitle.textContent;
+
 }
 
 button.addEventListener('click', showPopup);
