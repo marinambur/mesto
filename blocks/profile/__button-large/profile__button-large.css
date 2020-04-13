@@ -5,6 +5,7 @@
     background-color: black;
     border: 2px solid #FFFFFF;
     margin-top: 38px;
+    
 }
 
 .profile__button-large:hover {
@@ -17,5 +18,6 @@
         width: 282px;
         height: 50px;
         background-image: url('../../../images/Add_Button_big.png');
+        border: none;
     }
 }

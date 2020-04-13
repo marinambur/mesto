@@ -6,3 +6,9 @@
     max-width: 882px;
 }
 
+@media (max-width: 900px) {
+    .footer {
+        padding-top: 48px;
+        padding-bottom: 36px;
+    }
+}
