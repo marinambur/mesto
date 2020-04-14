@@ -9,6 +9,7 @@
     margin-left: 17px;
     border-style: none;
     padding: 0;
+    outline: none;
 }
 
 .profile__button-small:hover {
