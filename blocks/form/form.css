@@ -1,9 +1,7 @@
-@import url(./__button_save/form__button_save.css);
+@import url(./__save/form__save.css);
 @import url(./__name/form__name.css);
 @import url(./__profession/form__profession.css);
-@import url(./__name-input/form__name-input.css);
 @import url(./__heading/form__heading.css);
-@import url(./__profession-input/form__profession-input.css);
 
 .form {
     display: flex;

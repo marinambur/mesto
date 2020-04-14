@@ -15,5 +15,7 @@
 @media (max-width: 700px) {
     .footer__copyright {
         padding-left: 19px;
+        font-size: 14px;
+        line-height: 17px;
     }
 }
