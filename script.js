@@ -18,17 +18,15 @@ function closePopup() {
 }
 close.addEventListener('click', closePopup);
 const formElement = popup.querySelector('.form');
+const form__button_save = document.querySelector('.form__button_save');
 function formSubmitHandler(evt) {
     evt.preventDefault();
     nameInput.getAttribute('value');
     jobInput.getAttribute('value');
     profile__title.textContent = nameInput.value;
     profile__subtitle.textContent = jobInput.value;
+    closePopup()
 }
-const form__button_save = document.querySelector('.form__button_save');
-function closePopup() {
-    popup.classList.remove('popup_opened');
-}
-form__button_save.addEventListener('click', closePopup);
+
 formElement.addEventListener('submit', formSubmitHandler);
 
