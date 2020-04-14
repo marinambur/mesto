@@ -1,4 +1,4 @@
-.form__button_save {
+.form__save {
     width: 358px;
     height: 50.15px;
     background-color: black;
@@ -6,18 +6,20 @@
     border-style: none;
     margin-top: 48px;
     border-radius: 2px;
+    margin-bottom: 36px;
 }
 
-.form__button_save:hover {
+.form__save:hover {
     background: rgba(0, 0, 0, 0.8);
     cursor: pointer;
 }
 
 @media (max-width: 503px) {
-    .form__button_save {
+    .form__save {
         width: 150px;
         height: 50px;
         margin: auto;
-        margin-top: 48px;
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
 }
