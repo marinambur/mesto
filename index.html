@@ -28,48 +28,7 @@
             <button class="profile__button-large" type="button"><img src="./images/plus.svg" alt="Плюс"></button>
         </section>
         <section class="grid">
-            <div class="grid__box">
-                <img class="grid__item" src="./images/moscow.jpg" alt="Москва" />
-                <div class="grid__text">
-                    <h3 class="grid__header">Москва</h3>
-                    <button class="grid__heart" type="button"><img src="./images/heart.svg" alt="Сердечко"></button>
-                </div>
-            </div>
-            <div class="grid__box">
-                <img class="grid__item" src="./images/sydney_australia.jpg" alt="Сидней" />
-                <div class="grid__text">
-                    <h3 class="grid__header">Сидней</h3>
-                    <button class="grid__heart" type="button"><img src="./images/heart.svg" alt="Сердечко"></button>
-                </div>
-            </div>
-            <div class="grid__box">
-                <img class="grid__item" src="./images/bilbao_spain.jpg" alt="Бильбао" />
-                <div class="grid__text">
-                    <h3 class="grid__header">Бильбао</h3>
-                    <button class="grid__heart" type="button"><img src="./images/heart.svg" alt="Сердечко"></button>
-                </div>
-            </div>
-            <div class="grid__box">
-                <img class="grid__item" src="./images/kazan_russia.jpg" alt="Казань" />
-                <div class="grid__text">
-                    <h3 class="grid__header">Казань</h3>
-                    <button class="grid__heart" type="button"><img src="./images/heart.svg" alt="Сердечко"></button>
-                </div>
-            </div>
-            <div class="grid__box">
-                <img class="grid__item" src="./images/antverpen_Belgium.jpg" alt="Антверпен" />
-                <div class="grid__text">
-                    <h3 class="grid__header">Антверпен</h3>
-                    <button class="grid__heart" type="button"><img src="./images/heart.svg" alt="Сердечко"></button>
-                </div>
-            </div>
-            <div class="grid__box">
-                <img class="grid__item" src="./images/london.jpg" alt="Лондон" />
-                <div class="grid__text">
-                    <h3 class="grid__header">Лондон</h3>
-                    <button class="grid__heart" type="button"><img src="./images/heart.svg" alt="Сердечко"></button>
-                </div>
-            </div>
+
         </section>
         <footer class="footer">
             <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
@@ -90,7 +49,36 @@
                 </form>
             </div>
         </section>
+        <section class="picture-add">
+            <div class="popup__container">
+                <button class="popup__button-close picture-add__button-close" type="button"><img
+                        src="./images/crest.svg" alt="Закрыть"></button>
+                <form class="form form-add" name="form" method="post" action="#">
+                    <h2 class="form__heading">Новое место</h2>
+                    <fieldset class="form__name">
+                        <input class="text-form text-form_name place-form_name" type="text" name="firstname"
+                            placeholder="Название">
+                    </fieldset>
+                    <fieldset class="form__profession">
+                        <input class="text-form text-form_profession place-form_link" type="text" name="firstname"
+                            placeholder="Ссылка на картинку">
+                    </fieldset>
+                    <button type="submit" class="form__save">Создать</button>
+                </form>
+            </div>
+        </section>
     </div>
+    <template id="grid-template">
+        <div class="grid__box">
+            <button type="button" class="grid__delete"></button>
+            <img class="grid__item" />
+            <div class="grid__text">
+                <h3 class="grid__header"></h3>
+                <button type="button" class="grid__heart"></button>
+
+            </div>
+        </div>
+    </template>
     <script src="./script/script.js"></script>
 </body>
 
