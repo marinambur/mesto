@@ -3,6 +3,8 @@
 @import url(./__box/grid__box.css);
 @import url(./__header/grid__header.css);
 @import url(./__heart/grid__heart.css);
+@import url(./__heart-active/grid__heart-active.css);
+@import url(./__delete/grid__delete.css);
 .grid {
     -webkit-box-pack: center;
     -ms-flex-pack: center;

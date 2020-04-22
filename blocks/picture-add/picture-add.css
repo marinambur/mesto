@@ -1,0 +1,12 @@
+
+
+
+.picture-add {
+    background: rgba(0, 0, 0, .5);
+    width: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    display: none;
+}
