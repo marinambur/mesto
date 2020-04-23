@@ -11,5 +11,7 @@
 @import url(../blocks/text-form/text-form.css);
 @import url(../blocks/picture-add/picture-add.css);
 @import url(../blocks/picture-add/_opened/picture-add_opened.css);
+@import url(../blocks/picture-big/picture-big.css);
+@import url(../blocks/picture-big/picture-big_opened/picture-big_opened.css);
 
 
