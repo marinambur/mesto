@@ -67,11 +67,21 @@
                 </form>
             </div>
         </section>
+        <section class="picture-big">
+            <div class="picture-big__container">
+                <button class="popup__button-close picture-add__button-close" type="button"><img
+                        src="./images/crest.svg" alt="Закрыть"></button>
+                <img class="picture-big__item" />
+                <h3 class="picture-big__name"></h3>
+            </div>
+        </section>
     </div>
     <template id="grid-template">
         <div class="grid__box">
             <button type="button" class="grid__delete"></button>
-            <img class="grid__item" />
+            <a class="grid__picture" href="#">
+                <img class="grid__item" />
+            </a>
             <div class="grid__text">
                 <h3 class="grid__header"></h3>
                 <button type="button" class="grid__heart"></button>

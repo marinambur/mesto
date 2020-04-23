@@ -20,9 +20,14 @@ const profileTitle = document.querySelector('.profile__title');//здесь и �
 const profileSubtitle = document.querySelector('.profile__subtitle');
 const popup = document.querySelector('.popup');//нашли 2 попапа
 const pictureAdd = document.querySelector('.picture-add');
-
+const pictureLink = document.querySelector('.grid__picture');
+const picturePopUp = document.querySelector('.picture-big');
 const formElement = popup.querySelector('.form');
 const formPictureAdd = document.querySelector('.form-add');
+//
+
+
+
 function showPopup() {
     popup.classList.add('popup_opened');
     nameInput.value = profileTitle.textContent;
@@ -34,14 +39,10 @@ function showPictureAdd() {
     linkInput.value = linkInput.textContent;
 }
 
-
-
 function closePopup() {
     popup.classList.remove('popup_opened');
 }//нажимаем на крест, введенные в форму данные не сохраняются, только исчезает попап
-function closePictureAdd() {
-    pictureAdd.classList.remove('picture-add_opened');
-}
+
 
 function formSubmitHandler(evt) {
     evt.preventDefault();
@@ -50,25 +51,24 @@ function formSubmitHandler(evt) {
     closePopup()
 }//нажимаем на "сохранить", данные из формы сохраняются в заголовки, а потом закрывается попап (переиспользуется та же функция, что и в кнопке-крестик)
 
-function formSubmitPictureAdd(evt) {
+
+function formSubmitPictureAdd(evt) {//добавляем картинку и название из данных формы
     evt.preventDefault();
     const gridElement = gridTemplate.cloneNode(true);//клонируем скелет карточки чтобы начать добавлять в нее элементы
-    gridElement.querySelector('.grid__header').textContent = placeInput.value;
-    gridElement.querySelector('.grid__item').src = linkInput.value;
-    gridContainer.prepend(gridElement);
-    closePictureAdd();
-    gridContainer.querySelector('.grid__heart').addEventListener('click', showLike);
-    gridContainer.querySelector('.grid__delete').addEventListener('click', delete_card);
+    gridElement.querySelector('.grid__header').textContent = placeInput.value;//то, что в 1 поле формы - это название картинки
+    gridElement.querySelector('.grid__item').src = linkInput.value;//во 2 поле адрес ссылки
+    gridContainer.prepend(gridElement);//добавили картинку впереди остальных
+    closePictureAdd();//закрыли форму добавления картинки
+    gridContainer.querySelector('.grid__heart').addEventListener('click', showLike);//слушатель сердечка
+    gridContainer.querySelector('.grid__delete').addEventListener('click', delete_card);//слушатель удаления картинки
+    gridContainer.querySelector('.grid__picture').addEventListener('click', showPictureBig);//слушатель открывания большой картинки
+    
 }
 
-close.addEventListener('click', closePopup);
-closePic.addEventListener('click', closePictureAdd);//слушатели событий по кликам на кнопки, запускают функции
-button.addEventListener('click', showPopup);
-plus.addEventListener('click', showPictureAdd);
-formElement.addEventListener('submit', formSubmitHandler);
-formPictureAdd.addEventListener('submit', formSubmitPictureAdd);
 
-const initialCards = [
+
+
+const initialCards = [//архив 6 картинок, данных в ТЗ
     {
         name: 'Архыз',
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
@@ -96,31 +96,61 @@ const initialCards = [
 ];
 
 
-initialCards.forEach(function addCard(item) {
+initialCards.forEach(function addCard(item) {//добавление картинок из цикла
     const gridElement = gridTemplate.cloneNode(true);//клонируем скелет карточки чтобы начать добавлять в нее элементы
     gridElement.querySelector('.grid__item').src = item.link;//добавили картинку
     gridElement.querySelector('.grid__header').textContent = item.name;//добавили подпись к картинке
     gridContainer.prepend(gridElement);//добавили полученную карточку в секцию
-    gridContainer.querySelector('.grid__heart').addEventListener('click', showLike);
+    gridContainer.querySelector('.grid__heart').addEventListener('click', showLike);//опять все слушатели
     gridContainer.querySelector('.grid__delete').addEventListener('click', delete_card);
+    gridContainer.querySelector('.grid__picture').addEventListener('click', showPictureBig);
+
+
 });
 
 
-function showLike(evt) {
-    evt.target.classList.toggle('grid__heart-active');
+function showLike(evt) {//функция закрашивания сердечка по нажатию
+    evt.target.classList.toggle('grid__heart-active');//event target помогает понять какое сердечко красить
 }
 
-function delete_card(evt) {
-    evt.target.closest('.grid__box').remove();
+function delete_card(evt) {//функция удаления карточки
+    evt.target.closest('.grid__box').remove();//event target помогает удалить карточку, closest помогает найти родителя именно этого мусорного ведра именно этой карточки
 }
 
 
 
+let imageBig = document.querySelector('.picture-big__item');//нашли картинку в будущем поп-апе 
+let imageHeader = document.querySelector('.picture-big__name');//нашли название в будущем попапе, который сейчас откроем
+function showPictureBig(evt) {//добавляем поп-ап увеличения той картинки, на которую мы нажали
+    console.log(evt);
+    picturePopUp.classList.add('picture-big_opened');//нажали на картинку карточки (она же ссылка) - добавили класс открывания поп-апа
+    imageBig.src = evt.target.src;//адрес будущей картинки это адрес картинки в карточке (НАХОДИТ ТОЛЬКО 1 РАЗ - ПОЧЕМУ???)
+    console.log(imageBig.nextElementSibling);
+    console.log(imageHeader.textContent);
+    console.log(evt.target.parentElement.nextElementSibling.firstElementChild);
+    imageHeader.textContent = evt.target.parentElement.nextElementSibling.firstElementChild.textContent;
+    //console.log(evt.target.imageBig.nextElementSibling.textContent);
 
+    //imageHeader.textContent = ; //это должно быть добавление названия картинки из названия карточки НЕ ДОДЕЛАНО, НЕ РАБОТАЕТ
 
+}
 
+function closePictureAdd() {
+    pictureAdd.classList.remove('picture-add_opened');
+}
+//let closePictureButton = document.querySelector('picture-add__button-close');
+function closePictureBig(evt) {//закрываем большой поп-ап с картинкой - РАБОТАЕТ ТОЖЕ ТОЛЬКО 1 РАЗ
+    evt.target.closest('.picture-big').classList.remove('picture-big_opened');
+}
 
-
+close.addEventListener('click', closePopup);//слушатели событий по кликам на кнопки, запускают функции
+closePic.addEventListener('click', closePictureAdd);
+button.addEventListener('click', showPopup);
+plus.addEventListener('click', showPictureAdd);
+formElement.addEventListener('submit', formSubmitHandler);
+formPictureAdd.addEventListener('submit', formSubmitPictureAdd);
+//gridContainer.querySelector('.grid__picture').addEventListener('click', showPictureBig);
+picturePopUp.querySelector('.popup__button-close').addEventListener('click', closePictureBig);//?????
 
 
 
