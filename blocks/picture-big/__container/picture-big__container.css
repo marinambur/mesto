@@ -13,3 +13,16 @@
     position: relative;
 
 }
+@media (max-width: 1070px) {
+    .picture-big__container {
+        width: fit-content;
+        max-width: 500px;
+    }
+}
+
+@media (max-width: 610px) {
+    .picture-big__container {
+        max-width: 240px;
+        max-height: 350px;
+    }
+}

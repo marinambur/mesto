@@ -6,3 +6,11 @@
     margin-block-end: 0;
     padding-top: 34px;
 }
+
+@media (max-width: 503px) {
+    .form__heading {
+        padding-top: 28px;
+        font-size: 18px;
+        line-height: 22px;
+    }
+}

@@ -17,6 +17,6 @@
 
 @media (max-width: 530px) {
     .popup__button-close {
-        right: 10px;
+        top: -29px;
     }
 }
