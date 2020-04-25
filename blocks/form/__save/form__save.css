@@ -17,10 +17,10 @@
 
 @media (max-width: 503px) {
     .form__save {
-        width: 150px;
-        height: 50px;
+        width: 200px;
+        height: 40px;
         margin: auto;
-        margin-top: 20px;
+        margin-top: 33px;
         margin-bottom: 20px;
     }
 }
