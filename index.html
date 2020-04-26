@@ -67,12 +67,12 @@
                 </form>
             </div>
         </section>
-        <section class="popup picture-big" id="picture-big">
-            <div class="picture-big__container">
-                <button class="popup__button-close picture-big__button-close" type="button"><img class="popup__cross"
+        <section class="popup popup_opacity" id="picture-big">
+            <div class="popup__enlargement">
+                <button class="popup__button-close popup__button-close_big" type="button"><img class="popup__cross"
                         src="./images/crest.svg" alt="Закрыть"></button>
-                <img class="picture-big__item" />
-                <h3 class="picture-big__name"></h3>
+                <img class="popup__item" />
+                <h3 class="popup__name"></h3>
             </div>
         </section>
     </div>
@@ -80,7 +80,7 @@
         <div class="grid__box">
             <button type="button" class="grid__delete"></button>
             <a class="grid__picture" href="#">
-                <img class="grid__item" />
+                <img data-name="" class="grid__item" />
             </a>
             <div class="grid__text">
                 <h3 class="grid__header"></h3>

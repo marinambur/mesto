@@ -1,17 +1,17 @@
-.picture-big__item {
+.popup__item {
     height: 100%;
     width: fit-content;
 }
 
 @media (max-width: 1070px) {
-    .picture-big__item {
+    .popup__item {
         max-width: 100%;
         max-height: max-content;
     }
 }
 
 @media (max-width: 610px) {
-    .picture-big__item {
+    .popup__item {
         max-width: 240px;
         max-height: 299px;
     }

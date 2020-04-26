@@ -2,6 +2,9 @@
 @import url(./_opened/popup_opened.css);
 @import url(./__button-close/popup__button-close.css);
 @import url(./__cross/popup__cross.css);
+@import url(./__enlargement/popup__enlargement.css);
+@import url(./__item/popup__item.css);
+@import url(./__name/popup__name.css);
 .popup {
     background: rgba(0, 0, 0, .5);
     width: 100%;
