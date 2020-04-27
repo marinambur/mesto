@@ -1,4 +1,4 @@
-.grid__delete {
+.card__delete {
     border: none;
     background: url(../../../images/Trash.svg) center no-repeat;
     background-size: 100%;
@@ -13,6 +13,6 @@
     right: 15px;
 }
 
-.grid__delete:hover {
+.card__delete:hover {
     opacity: 0.6;
 }

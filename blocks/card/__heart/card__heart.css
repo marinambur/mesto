@@ -1,4 +1,4 @@
-.grid__heart {
+.card__heart {
     border: none;
     background: url(../../../images/heart.svg) center no-repeat;
     background-size: 100%;
@@ -9,7 +9,6 @@
     transition: 0.3s;
 }
 
-.grid__heart:hover {
+.card__heart:hover {
     opacity: 0.6;
 }
-  
