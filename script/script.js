@@ -1,5 +1,5 @@
 const gridContainer = document.querySelector('.grid');//нашли секцию, в которую будем добавлять карточки
-const cardTemplate = document.querySelector('#grid-template').content;//нашли template в котором будем работать
+const cardTemplate = document.querySelector('#card-template').content;//нашли template в котором будем работать
 const plus = document.querySelector('.profile__button-large');
 const closePic = document.querySelector('.picture-add__button-close');
 const button = document.querySelector('.profile__button-small');//находим кнопки
@@ -48,14 +48,13 @@ const initialCards = [//архив 6 картинок, данных в ТЗ
 ];
 function togglePopup(elem) {//открытие и закрытие всех форм
     if (elem.classList.contains('popup_opened')) {
-        elem.classList.toggle('popup_opened')
     } else {
-        elem.classList.toggle('popup_opened');
         nameInput.value = profileTitle.textContent;
         jobInput.value = profileSubtitle.textContent;
         placeInput.value = "";
         linkInput.value = "";
     }
+    elem.classList.toggle('popup_opened');
 };
 
 function formSubmitHandler(evt) {
@@ -67,11 +66,17 @@ function formSubmitHandler(evt) {
 
 function addCard(name, picture) {//собираем карточку
     const cardElement = cardTemplate.cloneNode(true);
-    cardElement.querySelector('.grid__header').textContent = name;
-    cardElement.querySelector('.grid__item').src = picture;
-    cardElement.querySelector('.grid__heart').addEventListener('click', showLike);//слушатель сердечка
-    cardElement.querySelector('.grid__delete').addEventListener('click', deleteCard);//слушатель удаления картинки
-    cardElement.querySelector('.grid__picture').addEventListener('click', showPictureBig);//слушатель открывания большой картинки
+    const cardElementItem = cardElement.querySelector('.card__item');
+    const cardElementPicture = cardElement.querySelector('.card__picture');
+    const cardElementHeader = cardElement.querySelector('.card__header');
+    const cardElementHeart = cardElement.querySelector('.card__heart');
+    const cardElementDelete = cardElement.querySelector('.card__delete');
+    cardElementHeader.textContent = name;
+    cardElementItem.src = picture;
+    cardElementItem.dataset.name = name;
+    cardElementHeart.addEventListener('click', showLike);//слушатель сердечка
+    cardElementDelete.addEventListener('click', deleteCard);//слушатель удаления картинки
+    cardElementPicture.addEventListener('click', showPictureBig);//слушатель открывания большой картинки
     return cardElement;
 }
 
@@ -86,16 +91,18 @@ initialCards.forEach(function addCardFromArray(item) {//добавление к�
 });
 
 function showLike(evt) {//функция закрашивания сердечка по нажатию
-    evt.target.classList.toggle('grid__heart-active');//event target помогает понять какое сердечко красить
+    evt.target.classList.toggle('card__heart-active');//event target помогает понять какое сердечко красить
 }
 
 function deleteCard(evt) {//функция удаления карточки
-    evt.target.closest('.grid__box').remove();//event target помогает удалить карточку, closest помогает найти родителя именно этого мусорного ведра именно этой карточки
+    evt.target.closest('.card').remove();//event target помогает удалить карточку, closest помогает найти родителя именно этого мусорного ведра именно этой карточки
 }
 
 function showPictureBig(evt) {//добавляем поп-ап увеличения той картинки, на которую мы нажали
-    imageBig.src = evt.target.src;//адрес будущей картинки это адрес картинки в карточке 
-    imageHeader.textContent = evt.target.closest('.grid__box').lastElementChild.textContent;
+    let item = evt.target;
+    imageBig.src = item.src;//адрес будущей картинки это адрес картинки в карточке
+    imageBig.alt = item.dataset.name;
+    imageHeader.textContent = item.dataset.name;
     togglePopup(popupPictureBig);
 }
 //кнопка плюса, листенеры на кнопку открытия и на крестик закрытия
@@ -108,6 +115,3 @@ close.addEventListener('click', () => togglePopup(popupInformation));
 closeBigPicBtn.addEventListener('click', () => togglePopup(popupPictureBig));
 formElement.addEventListener('submit', formSubmitHandler);
 formPictureAdd.addEventListener('submit', formSubmitPictureAdd);
-
-
-
