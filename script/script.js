@@ -47,8 +47,7 @@ const initialCards = [//архив 6 картинок, данных в ТЗ
     }
 ];
 function togglePopup(elem) {//открытие и закрытие всех форм
-    if (elem.classList.contains('popup_opened')) {
-    } else {
+    if (!elem.classList.contains('popup_opened')) {
         nameInput.value = profileTitle.textContent;
         jobInput.value = profileSubtitle.textContent;
         placeInput.value = "";
@@ -63,6 +62,22 @@ function formSubmitHandler(evt) {
     profileSubtitle.textContent = jobInput.value;
     togglePopup(popupInformation);
 }//нажимаем на "сохранить", данные из формы сохраняются в заголовки, а потом закрывается попап
+
+function showLike(evt) {//функция закрашивания сердечка по нажатию
+    evt.target.classList.toggle('card__heart-active');//event target помогает понять какое сердечко красить
+}
+
+function deleteCard(evt) {//функция удаления карточки
+    evt.target.closest('.card').remove();//event target помогает удалить карточку, closest помогает найти родителя именно этого мусорного ведра именно этой карточки
+}
+
+function showPictureBig(evt) {//добавляем поп-ап увеличения той картинки, на которую мы нажали
+    const item = evt.target;
+    imageBig.src = item.src;//адрес будущей картинки это адрес картинки в карточке
+    imageBig.alt = item.dataset.name;
+    imageHeader.textContent = item.dataset.name;
+    togglePopup(popupPictureBig);
+}
 
 function addCard(name, picture) {//собираем карточку
     const cardElement = cardTemplate.cloneNode(true);
@@ -90,21 +105,6 @@ initialCards.forEach(function addCardFromArray(item) {//добавление к�
     gridContainer.prepend(addCard(item.name, item.link));//добавили полученную карточку в секцию
 });
 
-function showLike(evt) {//функция закрашивания сердечка по нажатию
-    evt.target.classList.toggle('card__heart-active');//event target помогает понять какое сердечко красить
-}
-
-function deleteCard(evt) {//функция удаления карточки
-    evt.target.closest('.card').remove();//event target помогает удалить карточку, closest помогает найти родителя именно этого мусорного ведра именно этой карточки
-}
-
-function showPictureBig(evt) {//добавляем поп-ап увеличения той картинки, на которую мы нажали
-    let item = evt.target;
-    imageBig.src = item.src;//адрес будущей картинки это адрес картинки в карточке
-    imageBig.alt = item.dataset.name;
-    imageHeader.textContent = item.dataset.name;
-    togglePopup(popupPictureBig);
-}
 //кнопка плюса, листенеры на кнопку открытия и на крестик закрытия
 plus.addEventListener('click', () => togglePopup(popupPictureAdd));
 closePic.addEventListener('click', () => togglePopup(popupPictureAdd));
