@@ -6,14 +6,14 @@ const button = document.querySelector('.profile__button-small');//находим
 const close = document.querySelector('.popup__button-close');
 const closeBigPicBtn = document.querySelector('.popup__button-close_big');
 const popup = document.querySelector('.popup');
-const formElement = popup.querySelector('.form');
+const formaElement = popup.querySelector('.form');
 const formPictureAdd = document.querySelector('.form-add');
 const popupPictureAdd = document.getElementById("picture-add");//id попапов
 const popupInformation = document.getElementById("information");
 const popupPictureBig = document.getElementById("picture-big");
 const imageBig = document.querySelector('.popup__item');//нашли картинку в будущем поп-апе 
 const imageHeader = document.querySelector('.popup__name');//нашли название в будущем попапе, который сейчас откроем
-const nameInput = document.querySelector('.text-form_name');//находим поля форм
+const nameInput = formaElement.querySelector('.text-form_name');//находим поля форм
 const jobInput = document.querySelector('.text-form_profession');
 const placeInput = document.querySelector('.place-form_name');//находим поля форм в форме добавления картинки
 const linkInput = document.querySelector('.place-form_link');
@@ -55,6 +55,85 @@ function togglePopup(elem) {//открытие и закрытие всех фо
     }
     elem.classList.toggle('popup_opened');
 };
+
+
+
+const showInputError = (formElement, inputElement, errorMessage) => {
+  const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
+
+
+  inputElement.classList.add('text-form_type_error');
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add('text-form-error_active');
+};
+
+const hideInputError = (formElement, inputElement) => {
+  const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
+  inputElement.classList.remove('text-form_type_error');
+  errorElement.classList.remove('text-form-error_active');
+  errorElement.textContent = '';
+};
+
+const checkInputValidity = (formElement, inputElement) => {
+  if (!inputElement.validity.valid) {
+    showInputError(formElement, inputElement, inputElement.validationMessage);
+  } else {
+    hideInputError(formElement, inputElement);
+  }
+};
+
+
+
+
+
+const hasInvalidInput = (inputList) => {
+  // проходим по этому массиву методом some
+  return inputList.some((inputElement) => {
+        // Если поле не валидно, колбэк вернёт true
+    // Обход массива прекратится и вся фунцкция
+    // hasInvalidInput вернёт true
+
+    return !inputElement.validity.valid;
+      
+  })
+
+};
+
+const toggleButtonState = (inputList, buttonElement) => {
+  // Если есть хотя бы один невалидный инпут
+  if (hasInvalidInput(inputList)) {
+    // сделай кнопку неактивной
+    buttonElement.classList.add('form__save_inactive');
+  } else {
+        // иначе сделай кнопку активной
+    buttonElement.classList.remove('form__save_inactive');
+  }
+};
+
+const setEventListeners = (formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll('.text-form'));
+  const buttonElement = formElement.querySelector('.form__save');
+
+  toggleButtonState(inputList, buttonElement);
+
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener('input', function () {
+      checkInputValidity(formElement, inputElement);
+      toggleButtonState(inputList, buttonElement);
+    });
+  });
+};
+
+const enableValidation = () => {
+  const formList = Array.from(document.querySelectorAll('.form'));
+  formList.forEach((formElement) => {
+    formElement.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+    });
+    setEventListeners(formElement);
+  });
+}
+enableValidation();
 
 function formSubmitHandler(evt) {
     evt.preventDefault();
@@ -113,5 +192,5 @@ closePic.addEventListener('click', () => togglePopup(popupPictureAdd));
 button.addEventListener('click', () => togglePopup(popupInformation));
 close.addEventListener('click', () => togglePopup(popupInformation));
 closeBigPicBtn.addEventListener('click', () => togglePopup(popupPictureBig));
-formElement.addEventListener('submit', formSubmitHandler);
+formaElement.addEventListener('submit', formSubmitHandler);
 formPictureAdd.addEventListener('submit', formSubmitPictureAdd);
