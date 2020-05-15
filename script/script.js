@@ -19,6 +19,7 @@ const placeInput = document.querySelector('.place-form_name');//находим �
 const linkInput = document.querySelector('.place-form_link');
 const profileTitle = document.querySelector('.profile__title');//здесь и далее находим заголовки, куда будут перезаписываться данные, введенные в форму, а также части формы
 const profileSubtitle = document.querySelector('.profile__subtitle');
+const errors = Array.from(document.querySelectorAll('.form__error')); //ошибки
 const initialCards = [//архив 6 картинок, данных в ТЗ
 
     {
@@ -46,7 +47,10 @@ const initialCards = [//архив 6 картинок, данных в ТЗ
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
     }
 ];
+
+
 function togglePopup(elem) {//открытие и закрытие всех форм
+  EscapeAndClickListener (elem);
     if (!elem.classList.contains('popup_opened')) {
         nameInput.value = profileTitle.textContent;
         jobInput.value = profileSubtitle.textContent;
@@ -55,8 +59,6 @@ function togglePopup(elem) {//открытие и закрытие всех фо
     }
     elem.classList.toggle('popup_opened');
 };
-
-
 
 const showInputError = (formElement, inputElement, errorMessage) => {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
@@ -197,3 +199,17 @@ close.addEventListener('click', () => togglePopup(popupInformation));
 closeBigPicBtn.addEventListener('click', () => togglePopup(popupPictureBig));
 formaElement.addEventListener('submit', formSubmitHandler);
 formPictureAdd.addEventListener('submit', formSubmitPictureAdd);
+
+function EscapeAndClickListener (elem) {
+  document.addEventListener('keydown', function (evt) {  // слушаетль нажатия клавиши esc
+      if (evt.key === 'Escape') {
+        togglePopup(elem);    
+      }
+  });
+
+  addEventListener('click', (evt) => {             // слушатель закрытия по клику по оверлею
+      if (evt.target.classList.contains('popup')) {
+          togglePopup(elem);  
+      }
+  });
+}

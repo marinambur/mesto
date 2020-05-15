@@ -13,4 +13,5 @@
 @import url(../blocks/text-form/_error/text-form_name_error.css);
 @import url(../blocks/text-form/__input-error/text-form__input-error.css);
 @import url(../blocks/text-form/__input-error/_active/text-form__input-error_active.css);
+@import url(../blocks/text-form/_error/text-form_error.css);
 @import url(../blocks/popup/_opacity/popup_opacity.css);
