@@ -62,14 +62,14 @@ const showInputError = (formElement, inputElement, errorMessage) => {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
 
 
-  inputElement.classList.add('text-form_type_error');
+  inputElement.classList.add('text-form_error');
   errorElement.textContent = errorMessage;
   errorElement.classList.add('text-form-error_active');
 };
 
 const hideInputError = (formElement, inputElement) => {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
-  inputElement.classList.remove('text-form_type_error');
+  inputElement.classList.remove('text-form_error');
   errorElement.classList.remove('text-form-error_active');
   errorElement.textContent = '';
 };
@@ -104,11 +104,14 @@ const toggleButtonState = (inputList, buttonElement) => {
   if (hasInvalidInput(inputList)) {
     // сделай кнопку неактивной
     buttonElement.classList.add('form__save_inactive');
+    buttonElement.disabled = true; 
   } else {
         // иначе сделай кнопку активной
     buttonElement.classList.remove('form__save_inactive');
+    buttonElement.disabled = false; 
   }
 };
+
 
 const setEventListeners = (formElement) => {
   const inputList = Array.from(formElement.querySelectorAll('.text-form'));
