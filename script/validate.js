@@ -87,7 +87,7 @@ enableValidation({
   formSelector: ".form",
   inputSelector: ".text-form",
   submitButtonSelector: ".form__save",
-  inactiveButtonClass: "form__save_inactive",
-  inputErrorClass: "text-form_error",
-  errorClass: "text-form-error_active",
+  inactiveButtonClass: ".form__save_inactive",
+  inputErrorClass: ".text-form_error",
+  errorClass: ".text-form-error_active",
 });
