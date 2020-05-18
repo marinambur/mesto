@@ -68,7 +68,7 @@ function EscapeAndClickListener(elem) {
     { once: true } //сработает только 1 раз
   );
 
-  addEventListener("click", (evt) => {
+  elem.addEventListener("click", (evt) => {
     if (evt.target.classList.contains("popup_opened")) {
       elem.classList.remove("popup_opened");
     }
@@ -98,7 +98,7 @@ function togglePopup(elem) {
     placeInput.value = "";
     linkInput.value = "";
   }
-  removeEventListener("click", (evt) => {
+  elem.removeEventListener("click", (evt) => {
     if (evt.target.classList.contains("popup_opened")) {
       elem.classList.remove("popup_opened");
     }
@@ -155,8 +155,6 @@ function formSubmitPictureAdd(evt) {
   gridContainer.prepend(addCard(placeInput.value, linkInput.value)); //добавили картинку впереди остальных
   togglePopup(popupPictureAdd); //закрыли форму добавления картинки
 }
-
-initialCards.forEach((item) => {});
 
 initialCards.forEach((item) => {
   //добавление картинок из цикла

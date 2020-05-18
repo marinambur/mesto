@@ -32,11 +32,7 @@ const checkInputValidity = (formElement, inputElement, formObject) => {
 };
 
 const hasInvalidInput = (inputList) => {
-  // проходим по этому массиву методом some
   return inputList.every((inputElement) => {
-    // Если поле не валидно, колбэк вернёт true
-    // Обход массива прекратится и вся фунцкция
-    // hasInvalidInput вернёт true
     return inputElement.validity.valid;
   });
 };
