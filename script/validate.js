@@ -31,26 +31,26 @@ const checkInputValidity = (formElement, inputElement, formObject) => {
   }
 };
 
-const hasInvalidInput = (inputList, formObject) => {
+const hasInvalidInput = (inputList) => {
   // проходим по этому массиву методом some
-  return inputList.some((inputElement) => {
+  return inputList.every((inputElement) => {
     // Если поле не валидно, колбэк вернёт true
     // Обход массива прекратится и вся фунцкция
     // hasInvalidInput вернёт true
-    return !inputElement.validity.valid;
+    return inputElement.validity.valid;
   });
 };
 
 const toggleButtonState = (inputList, buttonElement, formObject) => {
   // Если есть хотя бы один невалидный инпут
-  if (hasInvalidInput(inputList, formObject)) {
-    // сделай кнопку неактивной
-    buttonElement.classList.add(formObject.inactiveButtonClass);
-    buttonElement.disabled = true;
-  } else {
-    // иначе сделай кнопку активной
+  if (hasInvalidInput(inputList)) {
+    // сделай кнопку активной
     buttonElement.classList.remove(formObject.inactiveButtonClass);
     buttonElement.disabled = false;
+  } else {
+    // иначе сделай кнопку неактивной
+    buttonElement.classList.add(formObject.inactiveButtonClass);
+    buttonElement.disabled = true;
   }
 };
 
@@ -83,11 +83,12 @@ const enableValidation = (formObject) => {
     setEventListeners(formElement, formObject);
   });
 };
+
 enableValidation({
   formSelector: ".form",
   inputSelector: ".text-form",
   submitButtonSelector: ".form__save",
-  inactiveButtonClass: ".form__save_inactive",
-  inputErrorClass: ".text-form_error",
-  errorClass: ".text-form-error_active",
+  inactiveButtonClass: "form__save_inactive",
+  inputErrorClass: "text-form_error",
+  errorClass: "text-form-error_active",
 });

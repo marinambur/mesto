@@ -7,6 +7,7 @@
     width: 20px;
     right: 10px;
     transition: 0.3s;
+    margin-top: 6.5px;
 }
 
 .card__heart:hover {

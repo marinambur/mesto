@@ -20,6 +20,8 @@ const linkInput = document.querySelector(".place-form_link");
 const profileTitle = document.querySelector(".profile__title"); //здесь и далее находим заголовки, куда будут перезаписываться данные, введенные в форму, а также части формы
 const profileSubtitle = document.querySelector(".profile__subtitle");
 const errors = Array.from(document.querySelectorAll(".form__error")); //ошибки
+const inputs = Array.from(document.querySelectorAll(".text-form"));
+
 const initialCards = [
   //архив 6 картинок, данных в ТЗ
 
@@ -55,17 +57,53 @@ const initialCards = [
   },
 ];
 
+function EscapeAndClickListener(elem) {
+  document.addEventListener(
+    "keydown",
+    function (evt) {
+      if (evt.key === "Escape") {
+        elem.classList.remove("popup_opened");
+      }
+    },
+    { once: true } //сработает только 1 раз
+  );
+
+  addEventListener("click", (evt) => {
+    if (evt.target.classList.contains("popup_opened")) {
+      elem.classList.remove("popup_opened");
+    }
+  });
+}
+
+function eraser() {
+  errors.forEach((span) => {
+    span.classList.remove("text-form-error-active");
+    // удалим текст с ошибкой
+    span.textContent = "";
+  });
+  inputs.forEach((input) => {
+    input.classList.remove("text-form_error"); // удалим ошибку
+  });
+}
+
 function togglePopup(elem) {
   //открытие и закрытие всех форм
-  EscapeAndClickListener(elem);
+
   if (!elem.classList.contains("popup_opened")) {
     nameInput.value = profileTitle.textContent;
     jobInput.value = profileSubtitle.textContent;
-
+    eraser();
+    elem.classList.remove("popup_opened");
+    EscapeAndClickListener(elem);
     placeInput.value = "";
     linkInput.value = "";
   }
-  elem.classList.toggle("popup_opened");
+  removeEventListener("click", (evt) => {
+    if (evt.target.classList.contains("popup_opened")) {
+      elem.classList.remove("popup_opened");
+    }
+  }),
+    elem.classList.toggle("popup_opened");
 }
 
 function formSubmitHandler(evt) {
@@ -118,7 +156,9 @@ function formSubmitPictureAdd(evt) {
   togglePopup(popupPictureAdd); //закрыли форму добавления картинки
 }
 
-initialCards.forEach(function addCardFromArray(item) {
+initialCards.forEach((item) => {});
+
+initialCards.forEach((item) => {
   //добавление картинок из цикла
   gridContainer.prepend(addCard(item.name, item.link)); //добавили полученную карточку в секцию
 });
@@ -133,17 +173,3 @@ close.addEventListener("click", () => togglePopup(popupInformation));
 closeBigPicBtn.addEventListener("click", () => togglePopup(popupPictureBig));
 formaElement.addEventListener("submit", formSubmitHandler);
 formPictureAdd.addEventListener("submit", formSubmitPictureAdd);
-
-function EscapeAndClickListener(elem) {
-  document.addEventListener("keydown", function (evt) {
-    if (evt.key === "Escape") {
-      togglePopup(elem);
-    }
-  });
-
-  addEventListener("click", (evt) => {
-    if (evt.target.classList.contains("popup")) {
-      togglePopup(elem);
-    }
-  });
-}

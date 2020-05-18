@@ -1,3 +1,6 @@
 .form__error {
 color:red;
+height: 17px;
+font-size: 12px;
+line-height: 15px;
 }
