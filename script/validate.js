@@ -1,3 +1,13 @@
+const formObject = {
+  formSelector: ".form",
+  inputSelector: ".text-form",
+  submitButtonSelector: ".form__save",
+  inactiveButtonClass: "form__save_inactive",
+  inputErrorClass: "text-form_error",
+  errorClass: "text-form-error_active",
+}
+
+
 const showInputError = (
   formElement,
   inputElement,
@@ -68,7 +78,7 @@ const setEventListeners = (formElement, formObject) => {
   });
 };
 
-const enableValidation = (formObject) => {
+const enableValidation = () => {
   const formList = Array.from(
     document.querySelectorAll(formObject.formSelector)
   );
@@ -80,11 +90,13 @@ const enableValidation = (formObject) => {
   });
 };
 
-enableValidation({
+enableValidation(formObject);
+/*enableValidation({
   formSelector: ".form",
   inputSelector: ".text-form",
   submitButtonSelector: ".form__save",
   inactiveButtonClass: "form__save_inactive",
   inputErrorClass: "text-form_error",
   errorClass: "text-form-error_active",
-});
+});*/
+

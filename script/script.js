@@ -57,22 +57,28 @@ const initialCards = [
   },
 ];
 
-function EscapeAndClickListener(elem) {
-  document.addEventListener(
-    "keydown",
-    function (evt) {
-      if (evt.key === "Escape") {
-        elem.classList.remove("popup_opened");
-      }
-    },
-    { once: true } //сработает только 1 раз
-  );
+function clickClose(evt) {
+  if (evt.target.classList.contains("popup_opened")) {
+    evt.target.classList.remove("popup_opened");
+  }
+}
 
-  elem.addEventListener("click", (evt) => {
-    if (evt.target.classList.contains("popup_opened")) {
+function EscapeAndClickListener(elem) {
+  document.addEventListener("keydown", function (evt) {
+    if (evt.key === "Escape") {
       elem.classList.remove("popup_opened");
     }
   });
+  elem.addEventListener("click", clickClose);
+}
+
+function removeEscapeAndClickListener(elem) {
+  document.removeEventListener("keydown", function (evt) {
+    if (evt.key === "Escape") {
+      elem.classList.remove("popup_opened");
+    }
+  });
+  //elem.removeEventListener("click", clickClose);
 }
 
 function eraser() {
@@ -88,7 +94,6 @@ function eraser() {
 
 function togglePopup(elem) {
   //открытие и закрытие всех форм
-
   if (!elem.classList.contains("popup_opened")) {
     nameInput.value = profileTitle.textContent;
     jobInput.value = profileSubtitle.textContent;
@@ -98,12 +103,8 @@ function togglePopup(elem) {
     placeInput.value = "";
     linkInput.value = "";
   }
-  elem.removeEventListener("click", (evt) => {
-    if (evt.target.classList.contains("popup_opened")) {
-      elem.classList.remove("popup_opened");
-    }
-  }),
-    elem.classList.toggle("popup_opened");
+  removeEscapeAndClickListener(elem);
+  elem.classList.toggle("popup_opened");
 }
 
 function formSubmitHandler(evt) {
