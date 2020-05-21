@@ -5,8 +5,14 @@ const formObject = {
   inactiveButtonClass: "form__save_inactive",
   inputErrorClass: "text-form_error",
   errorClass: "text-form-error_active",
-}
+};
 
+const hideInputError = (formElement, inputElement, formObject) => {
+  const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
+  inputElement.classList.remove(formObject.inputErrorClass);
+  errorElement.classList.remove(formObject.errorClass);
+  errorElement.textContent = "";
+};
 
 const showInputError = (
   formElement,
@@ -19,13 +25,6 @@ const showInputError = (
   inputElement.classList.add(formObject.inputErrorClass);
   errorElement.textContent = errorMessage;
   errorElement.classList.add(formObject.errorClass);
-};
-
-const hideInputError = (formElement, inputElement, formObject) => {
-  const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
-  inputElement.classList.remove(formObject.inputErrorClass);
-  errorElement.classList.remove(formObject.errorClass);
-  errorElement.textContent = "";
 };
 
 const checkInputValidity = (formElement, inputElement, formObject) => {
@@ -91,12 +90,4 @@ const enableValidation = () => {
 };
 
 enableValidation(formObject);
-/*enableValidation({
-  formSelector: ".form",
-  inputSelector: ".text-form",
-  submitButtonSelector: ".form__save",
-  inactiveButtonClass: "form__save_inactive",
-  inputErrorClass: "text-form_error",
-  errorClass: "text-form-error_active",
-});*/
 

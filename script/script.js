@@ -19,8 +19,7 @@ const placeInput = document.querySelector(".place-form_name"); //находим 
 const linkInput = document.querySelector(".place-form_link");
 const profileTitle = document.querySelector(".profile__title"); //здесь и далее находим заголовки, куда будут перезаписываться данные, введенные в форму, а также части формы
 const profileSubtitle = document.querySelector(".profile__subtitle");
-const errors = Array.from(document.querySelectorAll(".form__error")); //ошибки
-const inputs = Array.from(document.querySelectorAll(".text-form"));
+const popups = Array.from(document.querySelectorAll(".popup"));
 
 const initialCards = [
   //архив 6 картинок, данных в ТЗ
@@ -31,7 +30,7 @@ const initialCards = [
       "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
   },
   {
-    name: "Челябинская область",
+    name: "Челябинск",
     link:
       "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
   },
@@ -60,51 +59,55 @@ const initialCards = [
 function clickClose(evt) {
   if (evt.target.classList.contains("popup_opened")) {
     evt.target.classList.remove("popup_opened");
+    removeEscapeAndClickListener(evt.target);
+  }
+}
+
+function escClose(evt) {
+  if (evt.key === "Escape") {
+    popups.forEach((popup) => {
+      if (popup.classList.contains("popup_opened")) {
+        popup.classList.remove("popup_opened");
+      }
+    });
   }
 }
 
 function EscapeAndClickListener(elem) {
-  document.addEventListener("keydown", function (evt) {
-    if (evt.key === "Escape") {
-      elem.classList.remove("popup_opened");
-    }
-  });
+  document.addEventListener("keydown", escClose);
   elem.addEventListener("click", clickClose);
 }
 
 function removeEscapeAndClickListener(elem) {
-  document.removeEventListener("keydown", function (evt) {
-    if (evt.key === "Escape") {
-      elem.classList.remove("popup_opened");
-    }
-  });
-  //elem.removeEventListener("click", clickClose);
+  document.removeEventListener("keydown", escClose);
+  elem.removeEventListener("click", clickClose);
 }
 
-function eraser() {
-  errors.forEach((span) => {
-    span.classList.remove("text-form-error-active");
-    // удалим текст с ошибкой
-    span.textContent = "";
-  });
-  inputs.forEach((input) => {
-    input.classList.remove("text-form_error"); // удалим ошибку
+function eraser(elem) {
+  const form = elem.querySelector(formObject.formSelector);
+  const formInputs = Array.from(
+    form.querySelectorAll(formObject.inputSelector)
+  );
+  formInputs.forEach((formInput) => {
+    hideInputError(form, formInput, formObject);
   });
 }
 
 function togglePopup(elem) {
   //открытие и закрытие всех форм
+
   if (!elem.classList.contains("popup_opened")) {
     nameInput.value = profileTitle.textContent;
     jobInput.value = profileSubtitle.textContent;
-    eraser();
-    elem.classList.remove("popup_opened");
+    eraser(elem);
+    elem.classList.add("popup_opened");
     EscapeAndClickListener(elem);
     placeInput.value = "";
     linkInput.value = "";
+  } else {
+    removeEscapeAndClickListener(elem);
+    elem.classList.toggle("popup_opened");
   }
-  removeEscapeAndClickListener(elem);
-  elem.classList.toggle("popup_opened");
 }
 
 function formSubmitHandler(evt) {
@@ -120,8 +123,14 @@ function showLike(evt) {
 }
 
 function deleteCard(evt) {
-  //функция удаления карточки
-  evt.target.closest(".card").remove(); //event target помогает удалить карточку, closest помогает найти родителя именно этого мусорного ведра именно этой карточки
+  const cardElement = evt.target.closest(".card");
+  const cardElementPicture = cardElement.querySelector(".card__picture");
+  const cardElementHeart = cardElement.querySelector(".card__heart");
+  const cardElementDelete = cardElement.querySelector(".card__delete");
+  cardElementHeart.removeEventListener("click", showLike); //слушатель сердечка
+  cardElementDelete.removeEventListener("click", deleteCard); //слушатель удаления картинки
+  cardElementPicture.removeEventListener("click", showPictureBig); //слушатель открывания большой картинки
+  cardElement.remove(); //event target помогает удалить карточку, closest помогает найти родителя именно этого мусорного ведра именно этой карточки
 }
 
 function showPictureBig(evt) {
@@ -130,7 +139,8 @@ function showPictureBig(evt) {
   imageBig.src = item.src; //адрес будущей картинки это адрес картинки в карточке
   imageBig.alt = item.dataset.name;
   imageHeader.textContent = item.dataset.name;
-  togglePopup(popupPictureBig);
+  popupPictureBig.classList.add("popup_opened");
+  EscapeAndClickListener(popupPictureBig);
 }
 
 function addCard(name, picture) {
@@ -165,7 +175,6 @@ initialCards.forEach((item) => {
 //кнопка плюса, листенеры на кнопку открытия и на крестик закрытия
 plus.addEventListener("click", () => togglePopup(popupPictureAdd));
 closePic.addEventListener("click", () => togglePopup(popupPictureAdd));
-
 //кнопка карандаш, листенеры на кнопку открытия и на крестик закрытия
 button.addEventListener("click", () => togglePopup(popupInformation));
 close.addEventListener("click", () => togglePopup(popupInformation));
