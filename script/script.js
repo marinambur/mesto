@@ -9,6 +9,10 @@ const popup = document.querySelector(".popup");
 const formaElement = popup.querySelector(".form");
 const formPictureAdd = document.querySelector(".form-add");
 const popupPictureAdd = document.getElementById("picture-add"); //id попапов
+const errorPlace = document.getElementById("name-place-error"); //ошибки инпутов
+const errorUrl = document.getElementById("link-place-error");
+const errorName = document.getElementById("name-input-error");
+const errorProfession = document.getElementById("profession-error");
 const popupInformation = document.getElementById("information");
 const popupPictureBig = document.getElementById("picture-big");
 const imageBig = document.querySelector(".popup__item"); //нашли картинку в будущем поп-апе
@@ -58,8 +62,7 @@ const initialCards = [
 
 function clickClose(evt) {
   if (evt.target.classList.contains("popup_opened")) {
-    evt.target.classList.remove("popup_opened");
-    removeEscapeAndClickListener(evt.target);
+    closePopup(evt.target);
   }
 }
 
@@ -67,13 +70,13 @@ function escClose(evt) {
   if (evt.key === "Escape") {
     popups.forEach((popup) => {
       if (popup.classList.contains("popup_opened")) {
-        popup.classList.remove("popup_opened");
+        closePopup(popup);
       }
     });
   }
 }
 
-function EscapeAndClickListener(elem) {
+function setEscapeAndClickListener(elem) {
   document.addEventListener("keydown", escClose);
   elem.addEventListener("click", clickClose);
 }
@@ -93,20 +96,42 @@ function eraser(elem) {
   });
 }
 
-function togglePopup(elem) {
-  //открытие и закрытие всех форм
+function openPopup(elem) {
+  elem.classList.add("popup_opened");
+  setEscapeAndClickListener(elem);
+}
 
-  if (!elem.classList.contains("popup_opened")) {
-    nameInput.value = profileTitle.textContent;
-    jobInput.value = profileSubtitle.textContent;
+function closePopup(elem) {
+  removeEscapeAndClickListener(elem);
+  elem.classList.remove("popup_opened");
+}
+
+function openPlaceForm(elem) {
+  placeInput.value = "";
+  linkInput.value = "";
+  //если элемент инпута формы содержит класс inputErrorClass - eraser и openpopup, иначе просто openPopup
+  if (
+    errorPlace.classList.contains(formObject.errorClass) ||
+    errorUrl.classList.contains(formObject.errorClass)
+  ) {
     eraser(elem);
-    elem.classList.add("popup_opened");
-    EscapeAndClickListener(elem);
-    placeInput.value = "";
-    linkInput.value = "";
+    openPopup(elem);
   } else {
-    removeEscapeAndClickListener(elem);
-    elem.classList.toggle("popup_opened");
+    openPopup(elem);
+  }
+}
+
+function openInformationForm(elem) {
+  nameInput.value = profileTitle.textContent;
+  jobInput.value = profileSubtitle.textContent;
+  if (
+    errorName.classList.contains(formObject.errorClass) ||
+    errorProfession.classList.contains(formObject.errorClass)
+  ) {
+    eraser(elem);
+    openPopup(elem);
+  } else {
+    openPopup(elem);
   }
 }
 
@@ -114,12 +139,21 @@ function formSubmitHandler(evt) {
   evt.preventDefault();
   profileTitle.textContent = nameInput.value;
   profileSubtitle.textContent = jobInput.value;
-  togglePopup(popupInformation);
+  closePopup(popupInformation);
 } //нажимаем на "сохранить", данные из формы сохраняются в заголовки, а потом закрывается попап
 
 function showLike(evt) {
   //функция закрашивания сердечка по нажатию
   evt.target.classList.toggle("card__heart-active"); //event target помогает понять какое сердечко красить
+}
+
+function showPictureBig(evt) {
+  //добавляем поп-ап увеличения той картинки, на которую мы нажали
+  const item = evt.target;
+  imageBig.src = item.src; //адрес будущей картинки это адрес картинки в карточке
+  imageBig.alt = item.dataset.name;
+  imageHeader.textContent = item.dataset.name;
+  openPopup(popupPictureBig);
 }
 
 function deleteCard(evt) {
@@ -131,16 +165,6 @@ function deleteCard(evt) {
   cardElementDelete.removeEventListener("click", deleteCard); //слушатель удаления картинки
   cardElementPicture.removeEventListener("click", showPictureBig); //слушатель открывания большой картинки
   cardElement.remove(); //event target помогает удалить карточку, closest помогает найти родителя именно этого мусорного ведра именно этой карточки
-}
-
-function showPictureBig(evt) {
-  //добавляем поп-ап увеличения той картинки, на которую мы нажали
-  const item = evt.target;
-  imageBig.src = item.src; //адрес будущей картинки это адрес картинки в карточке
-  imageBig.alt = item.dataset.name;
-  imageHeader.textContent = item.dataset.name;
-  popupPictureBig.classList.add("popup_opened");
-  EscapeAndClickListener(popupPictureBig);
 }
 
 function addCard(name, picture) {
@@ -164,7 +188,7 @@ function formSubmitPictureAdd(evt) {
   //добавляем картинку и название из данных формы
   evt.preventDefault();
   gridContainer.prepend(addCard(placeInput.value, linkInput.value)); //добавили картинку впереди остальных
-  togglePopup(popupPictureAdd); //закрыли форму добавления картинки
+  closePopup(popupPictureAdd); //закрыли форму добавления картинки
 }
 
 initialCards.forEach((item) => {
@@ -173,11 +197,11 @@ initialCards.forEach((item) => {
 });
 
 //кнопка плюса, листенеры на кнопку открытия и на крестик закрытия
-plus.addEventListener("click", () => togglePopup(popupPictureAdd));
-closePic.addEventListener("click", () => togglePopup(popupPictureAdd));
+plus.addEventListener("click", () => openPlaceForm(popupPictureAdd));
+closePic.addEventListener("click", () => closePopup(popupPictureAdd));
 //кнопка карандаш, листенеры на кнопку открытия и на крестик закрытия
-button.addEventListener("click", () => togglePopup(popupInformation));
-close.addEventListener("click", () => togglePopup(popupInformation));
-closeBigPicBtn.addEventListener("click", () => togglePopup(popupPictureBig));
+button.addEventListener("click", () => openInformationForm(popupInformation));
+close.addEventListener("click", () => closePopup(popupInformation));
+closeBigPicBtn.addEventListener("click", () => closePopup(popupPictureBig));
 formaElement.addEventListener("submit", formSubmitHandler);
 formPictureAdd.addEventListener("submit", formSubmitPictureAdd);
