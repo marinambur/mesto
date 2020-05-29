@@ -1,5 +1,6 @@
-const gridContainer = document.querySelector(".grid"); //нашли секцию, в которую будем добавлять карточки
-const cardTemplate = document.querySelector("#card-template").content; //нашли template в котором будем работать
+import {Card} from './Card.js';
+import {FormValidator} from './FormValidator.js';
+
 const plus = document.querySelector(".profile__button-large");
 const closePic = document.querySelector(".picture-add__button-close");
 const button = document.querySelector(".profile__button-small"); //находим кнопки
@@ -14,9 +15,7 @@ const errorUrl = document.getElementById("link-place-error");
 const errorName = document.getElementById("name-input-error");
 const errorProfession = document.getElementById("profession-error");
 const popupInformation = document.getElementById("information");
-const popupPictureBig = document.getElementById("picture-big");
-const imageBig = document.querySelector(".popup__item"); //нашли картинку в будущем поп-апе
-const imageHeader = document.querySelector(".popup__name"); //нашли название в будущем попапе, который сейчас откроем
+export const popupPictureBig = document.getElementById("picture-big");
 const nameInput = formaElement.querySelector(".text-form_name"); //находим поля форм
 const jobInput = document.querySelector(".text-form_profession");
 const placeInput = document.querySelector(".place-form_name"); //находим поля форм в форме добавления картинки
@@ -24,7 +23,17 @@ const linkInput = document.querySelector(".place-form_link");
 const profileTitle = document.querySelector(".profile__title"); //здесь и далее находим заголовки, куда будут перезаписываться данные, введенные в форму, а также части формы
 const profileSubtitle = document.querySelector(".profile__subtitle");
 const popups = Array.from(document.querySelectorAll(".popup"));
-
+const forms = Array.from(document.querySelectorAll('.popup__container')); // массив форм
+const errors = Array.from(document.querySelectorAll(".form__error")); //ошибки
+const inputs = Array.from(document.querySelectorAll(".text-form"));
+const formObject = {
+  formSelector: ".form",
+  inputSelector: ".text-form",
+  submitButtonSelector: ".form__save",
+  inactiveButtonClass: "form__save_inactive",
+  inputErrorClass: "text-form_error",
+  errorClass: "text-form-error_active",
+};
 const initialCards = [
   //архив 6 картинок, данных в ТЗ
 
@@ -86,17 +95,18 @@ function removeEscapeAndClickListener(elem) {
   elem.removeEventListener("click", clickClose);
 }
 
-function eraser(elem) {
-  const form = elem.querySelector(formObject.formSelector);
-  const formInputs = Array.from(
-    form.querySelectorAll(formObject.inputSelector)
-  );
-  formInputs.forEach((formInput) => {
-    hideInputError(form, formInput, formObject);
+function eraser() {
+  errors.forEach((span) => {
+    span.classList.remove(formObject.errorClass);
+    // удалим текст с ошибкой
+    span.textContent = "";
+  });
+  inputs.forEach((input) => {
+    input.classList.remove(formObject.inputErrorClass); // удалим ошибку
   });
 }
 
-function openPopup(elem) {
+export function openPopup(elem) {
   elem.classList.add("popup_opened");
   setEscapeAndClickListener(elem);
 }
@@ -142,60 +152,37 @@ function formSubmitHandler(evt) {
   closePopup(popupInformation);
 } //нажимаем на "сохранить", данные из формы сохраняются в заголовки, а потом закрывается попап
 
-function showLike(evt) {
-  //функция закрашивания сердечка по нажатию
-  evt.target.classList.toggle("card__heart-active"); //event target помогает понять какое сердечко красить
-}
-
-function showPictureBig(evt) {
-  //добавляем поп-ап увеличения той картинки, на которую мы нажали
-  const item = evt.target;
-  imageBig.src = item.src; //адрес будущей картинки это адрес картинки в карточке
-  imageBig.alt = item.dataset.name;
-  imageHeader.textContent = item.dataset.name;
-  openPopup(popupPictureBig);
-}
-
-function deleteCard(evt) {
-  const cardElement = evt.target.closest(".card");
-  const cardElementPicture = cardElement.querySelector(".card__picture");
-  const cardElementHeart = cardElement.querySelector(".card__heart");
-  const cardElementDelete = cardElement.querySelector(".card__delete");
-  cardElementHeart.removeEventListener("click", showLike); //слушатель сердечка
-  cardElementDelete.removeEventListener("click", deleteCard); //слушатель удаления картинки
-  cardElementPicture.removeEventListener("click", showPictureBig); //слушатель открывания большой картинки
-  cardElement.remove(); //event target помогает удалить карточку, closest помогает найти родителя именно этого мусорного ведра именно этой карточки
-}
-
-function addCard(name, picture) {
-  //собираем карточку
-  const cardElement = cardTemplate.cloneNode(true);
-  const cardElementItem = cardElement.querySelector(".card__item");
-  const cardElementPicture = cardElement.querySelector(".card__picture");
-  const cardElementHeader = cardElement.querySelector(".card__header");
-  const cardElementHeart = cardElement.querySelector(".card__heart");
-  const cardElementDelete = cardElement.querySelector(".card__delete");
-  cardElementHeader.textContent = name;
-  cardElementItem.src = picture;
-  cardElementItem.dataset.name = name;
-  cardElementHeart.addEventListener("click", showLike); //слушатель сердечка
-  cardElementDelete.addEventListener("click", deleteCard); //слушатель удаления картинки
-  cardElementPicture.addEventListener("click", showPictureBig); //слушатель открывания большой картинки
-  return cardElement;
-}
+initialCards.forEach((item) => {
+  const card = new Card(item, '#template');
+  // Добавляем в DOM
+  document.querySelector('.grid').prepend(card.generateCard());
+});
 
 function formSubmitPictureAdd(evt) {
   //добавляем картинку и название из данных формы
   evt.preventDefault();
-  gridContainer.prepend(addCard(placeInput.value, linkInput.value)); //добавили картинку впереди остальных
+  const object={};
+    object.link=linkInput.value;
+    object.name=placeInput.value;
+
+  const card = new Card(object, '#template');
+  // Добавляем в DOM
+  document.querySelector('.grid').prepend(card.generateCard());
   closePopup(popupPictureAdd); //закрыли форму добавления картинки
 }
-
-initialCards.forEach((item) => {
-  //добавление картинок из цикла
-  gridContainer.prepend(addCard(item.name, item.link)); //добавили полученную карточку в секцию
-});
-
+function startValidation () {
+  forms.forEach((form) => {
+    const valid = new FormValidator({
+      inputSelector: ".text-form",
+      submitButtonSelector: ".form__save",
+      inactiveButtonClass: "form__save_inactive",
+      inputErrorClass: "text-form_error",
+      errorClass: "text-form-error_active",
+    }, form);
+    valid.enableValidation();
+  });
+}
+startValidation ();
 //кнопка плюса, листенеры на кнопку открытия и на крестик закрытия
 plus.addEventListener("click", () => openPlaceForm(popupPictureAdd));
 closePic.addEventListener("click", () => closePopup(popupPictureAdd));
