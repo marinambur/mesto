@@ -1,4 +1,7 @@
-import {openPopup, popupPictureBig} from './index.js';
+
+import {popupBigPicture} from "./index.js";
+
+
 
 export class Card {
     constructor(data, cardSelector) {
@@ -36,7 +39,7 @@ export class Card {
         document.querySelector('.popup__item').src = this._picture;//адрес будущей картинки это адрес картинки в карточке
         document.querySelector('.popup__item').alt = this._name;
         document.querySelector('.popup__name').textContent = this._name;
-        openPopup(popupPictureBig);
+        popupBigPicture.open(this._picture, this._name);
     }
 
     generateCard() {

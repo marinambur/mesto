@@ -1,5 +1,8 @@
 import {Card} from './Card.js';
+import {Popup} from './Popup.js';
 import {FormValidator} from './FormValidator.js';
+import {PopupImage} from "./PopupImage.js";
+import {Section} from "./Section.js";
 
 const plus = document.querySelector(".profile__button-large");
 const closePic = document.querySelector(".picture-add__button-close");
@@ -7,15 +10,19 @@ const button = document.querySelector(".profile__button-small"); //находи�
 const close = document.querySelector(".popup__button-close");
 const closeBigPicBtn = document.querySelector(".popup__button-close_big");
 const popup = document.querySelector(".popup");
+
+
 const formaElement = popup.querySelector(".form");
 const formPictureAdd = document.querySelector(".form-add");
 const popupPictureAdd = document.getElementById("picture-add"); //id попапов
+const popupAddPicture = new Popup(popupPictureAdd);
 const errorPlace = document.getElementById("name-place-error"); //ошибки инпутов
 const errorUrl = document.getElementById("link-place-error");
 const errorName = document.getElementById("name-input-error");
 const errorProfession = document.getElementById("profession-error");
 const popupInformation = document.getElementById("information");
 export const popupPictureBig = document.getElementById("picture-big");
+export const popupBigPicture = new PopupImage(popupPictureBig);
 const nameInput = formaElement.querySelector(".text-form_name"); //находим поля форм
 const jobInput = document.querySelector(".text-form_profession");
 const placeInput = document.querySelector(".place-form_name"); //находим поля форм в форме добавления картинки
@@ -34,7 +41,7 @@ const formObject = {
     inputErrorClass: "text-form_error",
     errorClass: "text-form-error_active",
 };
-const initialCards = [
+export const items = [
     //архив 6 картинок, данных в ТЗ
 
     {
@@ -106,11 +113,11 @@ function eraser() {
     });
 }
 
+
 export function openPopup(elem) {
     elem.classList.add("popup_opened");
     setEscapeAndClickListener(elem);
 }
-
 function closePopup(elem) {
     removeEscapeAndClickListener(elem);
     elem.classList.remove("popup_opened");
@@ -152,7 +159,9 @@ function formSubmitHandler(evt) {
     closePopup(popupInformation);
 } //нажимаем на "сохранить", данные из формы сохраняются в заголовки, а потом закрывается попап
 
-initialCards.forEach((item) => {
+
+
+items.forEach((item) => {
     const card = new Card(item, '#template');
     // Добавляем в DOM
     document.querySelector('.grid').prepend(card.generateCard());
@@ -186,7 +195,9 @@ function startValidation() {
 
 startValidation();
 //кнопка плюса, листенеры на кнопку открытия и на крестик закрытия
-plus.addEventListener("click", () => openPlaceForm(popupPictureAdd));
+//button.addEventListener("click", () => popupAll.open());
+
+plus.addEventListener("click", () => popupAddPicture.open());
 closePic.addEventListener("click", () => closePopup(popupPictureAdd));
 //кнопка карандаш, листенеры на кнопку открытия и на крестик закрытия
 button.addEventListener("click", () => openInformationForm(popupInformation));
