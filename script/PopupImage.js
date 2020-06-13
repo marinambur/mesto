@@ -1,16 +1,18 @@
 import {Popup} from './Popup.js';
 export class PopupImage extends Popup {
-    constructor(popupSelector, pictureBig) {
+    constructor(item, popupSelector) {
       super(popupSelector)
-      this._pictureBig = pictureBig;
-      return this._pictureBig;
+      this._name = item.name;
+      this._picture = item.link;
     }
     _setEventListeners() {
         super._setEventListeners();
     }
 
     open(link, name) {
-        this.popupSelector.classList.add('popup_opened');
+        document.querySelector('.popup__item').src = this._picture;//адрес будущей картинки это адрес картинки в карточке
+        document.querySelector('.popup__item').alt = this._name;
+        document.querySelector('.popup__name').textContent = this._name
         super.open();
 }
     _handleEscClose(evt) {

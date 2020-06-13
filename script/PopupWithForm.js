@@ -7,10 +7,7 @@ const formObject = {
     inputErrorClass: "text-form_error",
     errorClass: "text-form-error_active",
 };
-const popup = document.querySelector(".popup");
-const formaElement = popup.querySelector(".form");
-const nameInput = formaElement.querySelector(".text-form_name"); //находим поля форм
-const jobInput = document.querySelector(".text-form_profession");
+
 export class PopupWithForm extends Popup{
     constructor(popupSelector, {submitForm}) {
         super(popupSelector);
@@ -26,6 +23,10 @@ export class PopupWithForm extends Popup{
             link: this.popupSelector.querySelector(".text-form_profession").value
         };
         return item;
+      }
+      deleteInputValues() {
+          name: this.popupSelector.querySelector(".text-form_name").value = '';
+          link: this.popupSelector.querySelector(".text-form_profession").value = '';
       }
       _eraser() {
             const errors = Array.from(this.popupSelector.querySelectorAll(".form__error"));
@@ -45,7 +46,7 @@ export class PopupWithForm extends Popup{
       }
 
     close() {
-          this.popupSelector.removeEventListener('submit', this._submitForm);
+          this.popupSelector.removeEventListener('submit', this.submitForm);
           this._eraser();
           super.close();
       }
