@@ -3,19 +3,17 @@ import {Popup} from './Popup.js';
 import {FormValidator} from './FormValidator.js';
 import {PopupImage} from "./PopupImage.js";
 import {Section} from "./Section.js";
+import {PopupWithForm} from "./PopupWithForm.js";
+import {UserInfo} from "./UserInfo.js";
+
 
 const plus = document.querySelector(".profile__button-large");
-const closePic = document.querySelector(".picture-add__button-close");
 const button = document.querySelector(".profile__button-small"); //находим кнопки
-const close = document.querySelector(".popup__button-close");
-const closeBigPicBtn = document.querySelector(".popup__button-close_big");
 const popup = document.querySelector(".popup");
-const cardListSelector = document.querySelector('.grid')
-
+const cardListSelector = document.querySelector('.grid');
 const formaElement = popup.querySelector(".form");
 const formPictureAdd = document.querySelector(".form-add");
 const popupPictureAdd = document.getElementById("picture-add"); //id попапов
-const popupAddPicture = new Popup(popupPictureAdd);
 const errorPlace = document.getElementById("name-place-error"); //ошибки инпутов
 const errorUrl = document.getElementById("link-place-error");
 const errorName = document.getElementById("name-input-error");
@@ -76,7 +74,38 @@ export const items = [
     },
 ];
 
-function clickClose(evt) {
+const openPicForm = function () {
+const OpenFormPic = new PopupWithForm( popupPictureAdd, {
+    submitForm: (evt) => {
+        evt.preventDefault();
+        const item = OpenFormPic.getInputValues();
+        const card = new Card(item, '#template');
+        const cardElement = card.generateCard();
+        CardList.setItem(cardElement);
+    }
+}, );
+OpenFormPic.open()
+}
+
+const openInfoForm = function () {
+    const user_name = document.querySelector('.profile__title');
+    const user_info = document.querySelector('.profile__subtitle');
+
+    const userInfo = new UserInfo (user_name, user_info);
+    const OpenFormInfo = new PopupWithForm(popupInformation, {
+    submitForm: (evt) => {
+        evt.preventDefault();
+        userInfo.setUserInfo();
+        OpenFormInfo.close();
+    }
+});
+    userInfo.getUserInfo();
+    OpenFormInfo.open();
+
+}
+
+
+/*function clickClose(evt) {
     if (evt.target.classList.contains("popup_opened")) {
         closePopup(evt.target);
     }
@@ -100,7 +129,7 @@ function setEscapeAndClickListener(elem) {
 function removeEscapeAndClickListener(elem) {
     document.removeEventListener("keydown", escClose);
     elem.removeEventListener("click", clickClose);
-}
+}*/
 
 function eraser() {
     errors.forEach((span) => {
@@ -114,7 +143,7 @@ function eraser() {
 }
 
 
-export function openPopup(elem) {
+/*export function openPopup(elem) {
     elem.classList.add("popup_opened");
     setEscapeAndClickListener(elem);
 }
@@ -158,7 +187,7 @@ function formSubmitHandler(evt) {
     profileSubtitle.textContent = jobInput.value;
     closePopup(popupInformation);
 } //нажимаем на "сохранить", данные из формы сохраняются в заголовки, а потом закрывается попап
-
+*/
 const CardList = new Section ({items, renderer: (item) => {
         const card = new Card(item, '#template');
         const cardElement = card.generateCard();
@@ -205,11 +234,11 @@ startValidation();
 //кнопка плюса, листенеры на кнопку открытия и на крестик закрытия
 //button.addEventListener("click", () => popupAll.open());
 
-plus.addEventListener("click", () => popupAddPicture.open());
-closePic.addEventListener("click", () => closePopup(popupPictureAdd));
+plus.addEventListener("click", () => openPicForm());
+//closePic.addEventListener("click", () => closePopup(popupPictureAdd));
 //кнопка карандаш, листенеры на кнопку открытия и на крестик закрытия
-button.addEventListener("click", () => openInformationForm(popupInformation));
-close.addEventListener("click", () => closePopup(popupInformation));
-closeBigPicBtn.addEventListener("click", () => closePopup(popupPictureBig));
+button.addEventListener("click", () => openInfoForm());
+//close.addEventListener("click", () => closePopup(popupInformation));
+//closeBigPicBtn.addEventListener("click", () => closePopup(popupPictureBig));
 formaElement.addEventListener("submit", formSubmitHandler);
 formPictureAdd.addEventListener("submit", formSubmitPictureAdd);
