@@ -10,7 +10,7 @@ const button = document.querySelector(".profile__button-small"); //находи�
 const close = document.querySelector(".popup__button-close");
 const closeBigPicBtn = document.querySelector(".popup__button-close_big");
 const popup = document.querySelector(".popup");
-
+const cardListSelector = document.querySelector('.grid')
 
 const formaElement = popup.querySelector(".form");
 const formPictureAdd = document.querySelector(".form-add");
@@ -159,13 +159,21 @@ function formSubmitHandler(evt) {
     closePopup(popupInformation);
 } //нажимаем на "сохранить", данные из формы сохраняются в заголовки, а потом закрывается попап
 
+const CardList = new Section ({items, renderer: (item) => {
+        const card = new Card(item, '#template');
+        const cardElement = card.generateCard();
+        CardList.setItem(cardElement);
+  //      cardListSelector.prepend(card.generateCard());
+    }
+}, cardListSelector);
 
+CardList.renderItems(items);
 
-items.forEach((item) => {
-    const card = new Card(item, '#template');
+//items.forEach((item) => {
+//    const card = new Card(item, '#template');
     // Добавляем в DOM
-    document.querySelector('.grid').prepend(card.generateCard());
-});
+ //   document.querySelector('.grid').prepend(card.generateCard());
+//});
 
 function formSubmitPictureAdd(evt) {
     //добавляем картинку и название из данных формы
@@ -176,7 +184,7 @@ function formSubmitPictureAdd(evt) {
 
     const card = new Card(object, '#template');
     // Добавляем в DOM
-    document.querySelector('.grid').prepend(card.generateCard());
+   cardList.prepend(card.generateCard());
     closePopup(popupPictureAdd); //закрыли форму добавления картинки
 }
 

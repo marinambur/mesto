@@ -1,22 +1,17 @@
-import {Card} from "./Card.js";
-import {items} from "./index.js";
-
-
 export class Section {
     constructor({ items, renderer }, containerSelector) {
         this._renderedItems = items;
-        this._container = document.querySelector(`.${containerSelector}`);
+        this._renderer = renderer;
+        this._container = containerSelector;
     }
 
     renderItems() {
-        items.forEach((item) => {
-            const card = new Card(item, '#template');
-            // Добавляем в DOM
-            document.querySelector('.grid').prepend(card.generateCard());
+        this._renderedItems.forEach((item) => {
+            this._renderer(item);
         });
     }
 
-    //setItem(element) {
-      //  this._container.append(element);
-    //}
+    setItem(element) {
+      this._container.prepend(element);
+    }
 }
