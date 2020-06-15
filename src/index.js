@@ -1,9 +1,12 @@
-import {Card} from './Card.js';
-import {FormValidator} from './FormValidator.js';
-import {PopupImage} from "./PopupImage.js";
-import {Section} from "./Section.js";
-import {PopupWithForm} from "./PopupWithForm.js";
-import {UserInfo} from "./UserInfo.js";
+
+import './pages/index.css';
+import {Card} from './script/Card.js';
+import {FormValidator} from './script/FormValidator.js';
+import {PopupImage} from "./script/PopupImage.js";
+import {Section} from "./script/Section.js";
+import {PopupWithForm} from "./script/PopupWithForm.js";
+import {UserInfo} from "./script/UserInfo.js";
+
 
 
 const plus = document.querySelector(".profile__button-large");

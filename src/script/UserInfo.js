@@ -1,3 +1,4 @@
+
 const popup = document.querySelector(".popup");
 const formaElement = popup.querySelector(".form");
 const nameInput = formaElement.querySelector(".text-form_name"); //находим поля форм
