@@ -1,4 +1,3 @@
-
 export class Card {
     constructor(cardSelector, {data, handleCardClick}) {
         this._name = data.name;
@@ -26,8 +25,8 @@ export class Card {
         this._element.querySelector('.card__item').addEventListener('click', () => {
             this._handleCardClick(); //слушатель увеличенной карточки
         });
-
     }
+
     generateCard() {
         // Запишем разметку в приватное поле _element.
         // Так у других элементов появится доступ к ней.
