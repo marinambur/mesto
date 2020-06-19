@@ -1,4 +1,3 @@
-
 export class Card {
     constructor(cardSelector, {data, handleCardClick}) {
         this._name = data.name;
@@ -8,8 +7,7 @@ export class Card {
     }
 
     _getTemplate() {
-        const cardElement = document
-            .getElementById('card-template')
+        const cardElement = this._cardSelector
             .content
             .querySelector('.card')
             .cloneNode(true);
@@ -27,26 +25,18 @@ export class Card {
         this._element.querySelector('.card__item').addEventListener('click', () => {
             this._handleCardClick(); //слушатель увеличенной карточки
         });
-
     }
-
-    /*_showPictureBig() {
-        //добавляем поп-ап увеличения той картинки, на которую мы нажали
-
-        document.querySelector('.popup__item').src = this._picture;//адрес будущей картинки это адрес картинки в карточке
-        document.querySelector('.popup__item').alt = this._name;
-        document.querySelector('.popup__name').textContent = this._name;
-        popupBigPicture.open(this._picture, this._name);
-    }*/
 
     generateCard() {
         // Запишем разметку в приватное поле _element.
         // Так у других элементов появится доступ к ней.
         this._getTemplate();
         this._setEventListeners();
-        this._element.querySelector('.card__item').src = this._picture;
-        this._element.querySelector('.card__item').alt = this._name;
-        this._element.querySelector('.card__header').textContent = this._name;
+        const cardItem = this._element.querySelector('.card__item');
+        const cardHeader = this._element.querySelector('.card__header');
+        cardItem.src = this._picture;
+        cardItem.alt = this._name;
+        cardHeader.textContent = this._name;
         return this._element;
     }
 

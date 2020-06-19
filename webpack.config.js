@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin'); // подключили плагин
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
-    entry: { main: './src/index.js' },
+    entry: { main: './src/pages/index.js' },
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'main.js'
@@ -15,11 +15,14 @@ module.exports = {
                 exclude: '/node_modules/'
             },
             // добавили правило для обработки файлов
+                        {
+                test: /\.(png|svg|jpg|gif)$/,
+                loader: 'file-loader?name=./images/[name].[ext]'
+            },
             {
-                // регулярное выражение, которое ищет все файлы с такими расширениями
-                test: /\.(png|svg|jpg|gif|woff2|woff|otf|ttf)$/,
-                // при обработке этих файлов нужно использовать file-loader
-                loader: 'file-loader'
+                test: /\.(eot|ttf|woff|woff2)$/,
+                loader: 'file-loader?name=./vendor/[name].[ext]',
+
             },
             // аналогично добавьте правило для работы с html
             {
