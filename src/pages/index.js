@@ -14,6 +14,10 @@ const popupInformation = document.getElementById("information");
 export const popupPictureBig = document.getElementById("picture-big");
 const forms = Array.from(document.querySelectorAll('.popup__container')); // массив форм
 const template = document.getElementById('card-template');
+const popup = document.querySelector(".popup");
+const formaElement = popup.querySelector(".form");
+const nameInput = formaElement.querySelector(".text-form_name"); //находим поля форм
+const jobInput = document.querySelector(".text-form_profession");
 
 export const items = [
     //архив 6 картинок, данных в ТЗ
@@ -73,10 +77,6 @@ export const formProfileInfo = {
     profileStatus: document.querySelector('.profile__subtitle'),
 };
 
-const popup = document.querySelector(".popup");
-const formaElement = popup.querySelector(".form");
-const nameInput = formaElement.querySelector(".text-form_name"); //находим поля форм
-const jobInput = document.querySelector(".text-form_profession");
 const userInfo = new UserInfo(formProfileInfo);
 const OpenFormInfo = new PopupWithForm(popupInformation, {
     submitForm: (item) => {
