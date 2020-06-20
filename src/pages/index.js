@@ -54,7 +54,7 @@ export const items = [
     },
 ];
 
-const OpenFormPic = new PopupWithForm(popupPictureAdd, {
+const openFormPic = new PopupWithForm(popupPictureAdd, {
     submitForm: (item) => {
         const card = new Card(template, {
             data: item, handleCardClick: () => {
@@ -63,13 +63,12 @@ const OpenFormPic = new PopupWithForm(popupPictureAdd, {
         });
         const cardElement = card.generateCard();
         CardList.setItem(cardElement);
-        OpenFormPic.close();
+        openFormPic.close();
     }
 },);
 const popupBigPicture = new PopupWithImage(popupPictureBig);
 const openPicForm = function () {
-    OpenFormPic._deleteInputValues();
-    OpenFormPic.open()
+    openFormPic.open()
 }
 
 export const formProfileInfo = {
@@ -77,35 +76,6 @@ export const formProfileInfo = {
     profileStatus: document.querySelector('.profile__subtitle'),
 };
 
-const userInfo = new UserInfo(formProfileInfo);
-const OpenFormInfo = new PopupWithForm(popupInformation, {
-    submitForm: (item) => {
-        userInfo.setUserInfo(item);
-        OpenFormInfo.close();
-    }
-});
-
-const openInfoForm = () => {
-    const infoUser = userInfo.getUserInfo();
-    nameInput.value = infoUser.name;
-    jobInput.value = infoUser.info;
-    OpenFormInfo.open();
-}
-
-const CardList = new Section({
-    items, renderer: (item) => {
-        const card = new Card(template, {
-            data: item, handleCardClick: () => {
-                const popupBigPicture = new PopupWithImage(item, popupPictureBig)
-                popupBigPicture.open();
-            }
-        });
-        const cardElement = card.generateCard();
-        CardList.setItem(cardElement);
-    }
-}, cardListSelector);
-
-CardList.renderItems(items);
 
 function startValidation() {
     forms.forEach((form) => {
@@ -115,12 +85,46 @@ function startValidation() {
             inactiveButtonClass: "form__save_inactive",
             inputErrorClass: "text-form_error",
             errorClass: "text-form-error_active",
+            nameClass: ".text-form_name",
+            linkClass: ".text-form_profession"
         }, form);
         valid.enableValidation();
     });
 }
 
 startValidation();
+
+
+const userInfo = new UserInfo(formProfileInfo);
+const openFormInfo = new PopupWithForm(popupInformation, {
+    submitForm: (item) => {
+        userInfo.setUserInfo(item);
+        openFormInfo.close();
+    }
+});
+
+const openInfoForm = () => {
+    const infoUser = userInfo.getUserInfo();
+    nameInput.value = infoUser.name;
+    jobInput.value = infoUser.info;
+    openFormInfo.open();
+}
+
+const CardList = new Section({
+    items, renderer: (item) => {
+        const card = new Card(template, {
+            data: item, handleCardClick: () => {
+                const popupBigPicture = new PopupWithImage(popupPictureBig)
+                popupBigPicture.open(item);
+            }
+        });
+        const cardElement = card.generateCard();
+        CardList.setItem(cardElement);
+    }
+}, cardListSelector);
+
+CardList.renderItems(items);
+
 plus.addEventListener("click", () => openPicForm());
 button.addEventListener("click", () => openInfoForm());
 

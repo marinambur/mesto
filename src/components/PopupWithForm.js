@@ -1,5 +1,7 @@
 import {Popup} from "./Popup.js";
 
+
+
 const formObject = {
     formSelector: ".form",
     inputSelector: ".text-form",
@@ -52,6 +54,7 @@ export class PopupWithForm extends Popup {
         });
 
     }
+
 
     close() {
         this.popupSelector.removeEventListener('submit', this.submitForm);

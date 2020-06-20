@@ -5,21 +5,26 @@ export class FormValidator {
         this._inactiveButtonClass = settings.inactiveButtonClass;
         this._inputErrorClass = settings.inputErrorClass;
         this._errorClass = settings.errorClass;
+        this._nameClass = settings.nameClass;
+        this._linkClass = settings.linkClass;
         this._element = element;
     }
+
     _showInputError(formElement, inputElement, errorMessage) {
         const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
         inputElement.classList.add(this._inputErrorClass);
         errorElement.textContent = errorMessage;
         errorElement.classList.add(this._errorClass);
     };
-    _hideInputError(formElement, inputElement){
+
+    _hideInputError(formElement, inputElement) {
         const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
         inputElement.classList.remove(this._inputErrorClass);
         errorElement.classList.remove(this._errorClass);
         errorElement.textContent = "";
     };
-    _checkInputValidity(formElement, inputElement){
+
+    _checkInputValidity(formElement, inputElement) {
         if (!inputElement.validity.valid) {
             this._showInputError(
                 formElement,
@@ -32,13 +37,13 @@ export class FormValidator {
 
     };
 
-    _hasInvalidInput(inputList){
+    _hasInvalidInput(inputList) {
         return inputList.every((inputElement) => {
             return inputElement.validity.valid;
         });
     };
 
-    _toggleButtonState(inputList, buttonElement){
+    _toggleButtonState(inputList, buttonElement) {
         // Если есть хотя бы один невалидный инпут
         if (this._hasInvalidInput(inputList)) {
             // сделай кнопку активной
@@ -66,6 +71,25 @@ export class FormValidator {
     enableValidation() {
         this._setEventListeners(this._element);
     }
+
+    /*deleteInputValues() {
+        name: this._nameClass.value = '';
+        link: this._linkClass.value = '';
+    }
+
+    eraser() {
+        const errors = Array.from(this.popupSelector.querySelectorAll(".form__error"));
+        const inputs = Array.from(this.popupSelector.querySelectorAll(".text-form"));
+        errors.forEach((span) => {
+            span.classList.remove(formObject.errorClass);
+            // удалим текст с ошибкой
+            span.textContent = "";
+        });
+        inputs.forEach((input) => {
+            input.classList.remove(formObject.inputErrorClass); // удалим ошибку
+        });
+
+    }*/
 }
 
 
