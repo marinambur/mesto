@@ -1,10 +1,11 @@
 import '../pages/index.css';
 import {Card} from '../components/Card.js';
-import {FormValidator} from '../components/FormValidator.js';
 import {PopupWithImage} from "../components/PopupWithImage.js";
 import {Section} from "../components/Section.js";
 import {PopupWithForm} from "../components/PopupWithForm.js";
 import {UserInfo} from "../components/UserInfo.js";
+import {startValidation} from "../components/utils/functions.js";
+import {eraser} from "../components/utils/functions.js";
 
 const plus = document.querySelector(".profile__button-large");
 const button = document.querySelector(".profile__button-small"); //находим кнопки
@@ -12,13 +13,13 @@ const cardListSelector = document.querySelector('.grid');
 const popupPictureAdd = document.getElementById("picture-add"); //id попапов
 const popupInformation = document.getElementById("information");
 export const popupPictureBig = document.getElementById("picture-big");
-const forms = Array.from(document.querySelectorAll('.popup__container')); // массив форм
+export const forms = Array.from(document.querySelectorAll('.popup__container')); // массив форм
 const template = document.getElementById('card-template');
 const popup = document.querySelector(".popup");
 const formaElement = popup.querySelector(".form");
 const nameInput = formaElement.querySelector(".text-form_name"); //находим поля форм
 const jobInput = document.querySelector(".text-form_subject");
-const formObject = {
+export const formObject = {
     formSelector: ".form",
     inputSelector: ".text-form",
     submitButtonSelector: ".form__save",
@@ -62,20 +63,6 @@ export const items = [
     },
 ];
 
-const eraser = () => {
-    const errors = Array.from(document.querySelectorAll(".form__error"));
-    const inputs = Array.from(document.querySelectorAll(".text-form"));
-    errors.forEach((span) => {
-        span.classList.remove(formObject.errorClass);
-        // удалим текст с ошибкой
-        span.textContent = "";
-    });
-    inputs.forEach((input) => {
-        input.classList.remove(formObject.inputErrorClass); // удалим ошибку
-    });
-
-}
-
 const openFormPic = new PopupWithForm(popupPictureAdd, {
     submitForm: (item) => {
         const card = new Card(template, {
@@ -99,24 +86,7 @@ export const formProfileInfo = {
     profileStatus: document.querySelector('.profile__subtitle'),
 };
 
-
-function startValidation() {
-    forms.forEach((form) => {
-        const valid = new FormValidator({
-            inputSelector: ".text-form",
-            submitButtonSelector: ".form__save",
-            inactiveButtonClass: "form__save_inactive",
-            inputErrorClass: "text-form_error",
-            errorClass: "text-form-error_active",
-            nameClass: ".text-form_name",
-            linkClass: ".text-form_subject"
-        }, form);
-        valid.enableValidation();
-    });
-}
-
 startValidation();
-
 
 const userInfo = new UserInfo(formProfileInfo);
 const openFormInfo = new PopupWithForm(popupInformation, {
