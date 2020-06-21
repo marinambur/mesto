@@ -27,7 +27,6 @@ export class PopupWithForm extends Popup {
 
     close() {
         this.popupSelector.removeEventListener('submit', this.submitForm);
-        //this._eraser();
         this.popupSelector.querySelector('form').reset();//по условию задания close() должен тут перезаписываться и сбрасывать форму
         super.close();
     }
