@@ -108,7 +108,6 @@ const CardList = new Section({
     items, renderer: (item) => {
         const card = new Card(template, {
             data: item, handleCardClick: () => {
-                const popupBigPicture = new PopupWithImage(popupPictureBig)
                 popupBigPicture.open(item);
             }
         });

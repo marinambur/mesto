@@ -1,7 +1,8 @@
 import {Popup} from './Popup.js';
+
 export class PopupWithImage extends Popup {
     constructor(popupSelector) {
-      super(popupSelector)
+        super(popupSelector)
     }
 
     open(data) {
@@ -11,6 +12,6 @@ export class PopupWithImage extends Popup {
         popupItem.alt = data.name;
         popupName.textContent = data.name;
         super.open();
-}
+    }
 
 }
