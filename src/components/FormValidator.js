@@ -5,8 +5,6 @@ export class FormValidator {
         this._inactiveButtonClass = settings.inactiveButtonClass;
         this._inputErrorClass = settings.inputErrorClass;
         this._errorClass = settings.errorClass;
-        this._nameClass = settings.nameClass;
-        this._linkClass = settings.linkClass;
         this._element = element;
     }
 
@@ -72,24 +70,6 @@ export class FormValidator {
         this._setEventListeners(this._element);
     }
 
-    /*deleteInputValues() {
-        name: this._nameClass.value = '';
-        link: this._linkClass.value = '';
-    }
-
-    eraser() {
-        const errors = Array.from(this.popupSelector.querySelectorAll(".form__error"));
-        const inputs = Array.from(this.popupSelector.querySelectorAll(".text-form"));
-        errors.forEach((span) => {
-            span.classList.remove(formObject.errorClass);
-            // удалим текст с ошибкой
-            span.textContent = "";
-        });
-        inputs.forEach((input) => {
-            input.classList.remove(formObject.inputErrorClass); // удалим ошибку
-        });
-
-    }*/
 }
 
 

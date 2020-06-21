@@ -1,4 +1,4 @@
-.form__profession {
+.form__subject {
     padding: 29px 0 0;
     border-style: none;
     width: 358px;
@@ -9,7 +9,7 @@
 }
 
 @media (max-width: 503px) {
-    .form__profession {
+    .form__subject {
         width: 200px;
         padding-top: 15px;
         font-size: 12px;
