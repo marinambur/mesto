@@ -1,7 +1,11 @@
+import {Api as api} from "./Api.js";
+
 export class Card {
     constructor(cardSelector, {data, handleCardClick}) {
         this._name = data.name;
         this._picture = data.link;
+        this._like = data.likes;
+        this._id = data._id;
         this._cardSelector = cardSelector;
         this._handleCardClick = handleCardClick;
     }
@@ -41,7 +45,8 @@ export class Card {
     }
 
     _deleteCard() {
-        this._element.remove()
+        this._element.remove();
+
     };
 
     _showLike() {

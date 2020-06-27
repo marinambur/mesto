@@ -4,6 +4,7 @@ import {PopupWithImage} from "../components/PopupWithImage.js";
 import {Section} from "../components/Section.js";
 import {PopupWithForm} from "../components/PopupWithForm.js";
 import {UserInfo} from "../components/UserInfo.js";
+import {Api} from "../components/Api.js";
 import {startValidation} from "../components/utils/functions.js";
 import {eraser} from "../components/utils/functions.js";
 
@@ -28,43 +29,24 @@ export const formObject = {
     errorClass: "text-form-error_active",
 };
 
-export const items = [
-    //архив 6 картинок, данных в ТЗ
+const token = {
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-12',
+    headers: {
+        authorization: 'a737011d-02cf-4531-980a-f0cf56195ed9',
+        'Content-Type': 'application/json'
+    },
+};
 
-    {
-        name: "Архыз",
-        link:
-            "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-    },
-    {
-        name: "Челябинск",
-        link:
-            "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-    },
-    {
-        name: "Иваново",
-        link:
-            "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-    },
-    {
-        name: "Камчатка",
-        link:
-            "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-    },
-    {
-        name: "Холмогорский район",
-        link:
-            "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-    },
-    {
-        name: "Байкал",
-        link:
-            "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-    },
-];
+export const api = new Api(token);
+
 
 const openFormPic = new PopupWithForm(popupPictureAdd, {
+
     submitForm: (item) => {
+        api.toAddNewCard(item.name, item.link)
+            .catch((err) => {
+                console.log(err);
+            });
         const card = new Card(template, {
             data: item, handleCardClick: () => {
                 popupBigPicture.open(item);
@@ -84,16 +66,33 @@ const openPicForm = function () {
 export const formProfileInfo = {
     profileAuthor: document.querySelector('.profile__title'),
     profileStatus: document.querySelector('.profile__subtitle'),
+    profileAvatar: document.querySelector('.profile__avatar'),
 };
 
 startValidation();
 
 const userInfo = new UserInfo(formProfileInfo);
+
+api.getUserInfo()
+    .then((user) => {
+        userInfo.getUserInfo(user.name, user.about, user.avatar);
+        userInfo.setUserInfo(user);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+
 const openFormInfo = new PopupWithForm(popupInformation, {
-    submitForm: (item) => {
-        userInfo.setUserInfo(item);
-        openFormInfo.close();
-    }
+    submitForm: () => {
+        api.uploadUserInfo(nameInput.value, jobInput.value)
+            .then(data => userInfo.setUserInfo(data.name, data.about));
+        openFormInfo._setSubmitForm();
+        console.log(nameInput.value, jobInput.value)
+            .catch((err) => {
+                console.log(err);
+            });
+
+    },
 });
 
 const openInfoForm = () => {
@@ -103,20 +102,27 @@ const openInfoForm = () => {
     eraser();
     openFormInfo.open();
 }
+api.getInitialCards()
+    .then((items) => {
+        CardList.renderItems(items);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 
 const CardList = new Section({
-    items, renderer: (item) => {
+    renderer: (item) => {
         const card = new Card(template, {
             data: item, handleCardClick: () => {
                 popupBigPicture.open(item);
             }
         });
+        console.log(item._id);
         const cardElement = card.generateCard();
         CardList.setItem(cardElement);
     }
 }, cardListSelector);
 
-CardList.renderItems(items);
 
 plus.addEventListener("click", () => openPicForm());
 button.addEventListener("click", () => openInfoForm());

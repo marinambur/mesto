@@ -14,6 +14,7 @@ export class PopupWithForm extends Popup {
 
     _setSubmitForm(evt) {
         evt.preventDefault();
+        location.reload();
         this.submitForm(this._getInputValues());
     }
 
