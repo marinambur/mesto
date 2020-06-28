@@ -29,7 +29,7 @@ export const formObject = {
     errorClass: "text-form-error_active",
 };
 
-const token = {
+export const token = {
     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-12',
     headers: {
         authorization: 'a737011d-02cf-4531-980a-f0cf56195ed9',
@@ -117,7 +117,6 @@ const CardList = new Section({
                 popupBigPicture.open(item);
             }
         });
-        console.log(item._id);
         const cardElement = card.generateCard();
         CardList.setItem(cardElement);
     }

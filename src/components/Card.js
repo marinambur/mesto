@@ -1,4 +1,13 @@
-import {Api as api} from "./Api.js";
+import {Api} from "./Api.js";
+export const token = {
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-12',
+    headers: {
+        authorization: 'a737011d-02cf-4531-980a-f0cf56195ed9',
+        'Content-Type': 'application/json'
+    },
+};
+
+export const api = new Api(token);
 
 export class Card {
     constructor(cardSelector, {data, handleCardClick}) {
@@ -24,7 +33,7 @@ export class Card {
             this._showLike();
         }); //слушатель сердечка
         this._element.querySelector('.card__delete').addEventListener('click', () => {
-            this._deleteCard(); //слушатель мусорного ведра
+            this._deleteCard(this._id); //слушатель мусорного ведра
         });
         this._element.querySelector('.card__item').addEventListener('click', () => {
             this._handleCardClick(); //слушатель увеличенной карточки
@@ -44,8 +53,26 @@ export class Card {
         return this._element;
     }
 
-    _deleteCard() {
-        this._element.remove();
+    _deleteCard(id) {
+            return fetch(`https://mesto.nomoreparties.co/v1/cohort-12/cards/${id}`,{
+                method: 'DELETE',
+                baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-12',
+                headers: {
+                    authorization: 'a737011d-02cf-4531-980a-f0cf56195ed9',
+                    'Content-Type': 'application/json'
+                },
+
+            })
+                .then(this._element.remove())
+                .then((res) => {
+                    if (res.ok) {
+                        return res.json();
+                    }
+                    return Promise.reject(`error${res.status}`);
+                });
+
+        //api.deleteCard()
+            //
 
     };
 

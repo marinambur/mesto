@@ -62,14 +62,9 @@ export class Api {
             });
     }
 
-        deleteCard() {
-            return fetch(`https://mesto.nomoreparties.co/v1/cohort-12/cards/${this._id}`,{
-                method: 'DELETE',
-                headers: this.headers,
-                body: JSON.stringify({
-                    name: cardName,
-                    link: cardLink,
-                }),
+        /*deleteCard() {
+            return fetch(`https://mesto.nomoreparties.co/v1/cohort-12/cards/${this.id}`,{
+                method: 'DELETE'
             })
                 .then((res) => {
                     if (res.ok) {
@@ -77,7 +72,7 @@ export class Api {
                     }
                     return Promise.reject(`error${res.status}`);
                 });
-        }
+        }*/
 
 
 }
