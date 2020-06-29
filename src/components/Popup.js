@@ -22,6 +22,11 @@ export class Popup {
         }
     }
 
+
+    test() {
+        console.log('test');
+    }
+
     close() {
         this.popupSelector.classList.remove("popup_opened");
     }

@@ -62,7 +62,7 @@ export class Api {
             });
     }
 
-        /*deleteCard() {
+      /* deleteCard(id) {
             return fetch(`https://mesto.nomoreparties.co/v1/cohort-12/cards/${this.id}`,{
                 method: 'DELETE'
             })
@@ -74,5 +74,60 @@ export class Api {
                 });
         }*/
 
+    deleteCard(id) {
+        return fetch(`https://mesto.nomoreparties.co/v1/cohort-12/cards/${id}`,{
+            method: 'DELETE',
+            baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-12',
+            headers: {
+                authorization: 'a737011d-02cf-4531-980a-f0cf56195ed9',
+                'Content-Type': 'application/json'
+            },
 
+        })
+            //.then (this._element.remove())
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(`error${res.status}`);
+            });
+
+        //api.deleteCard()
+        //
+
+    };
+
+
+    putLike(cardId) {
+
+        return fetch(`https://mesto.nomoreparties.co/v1/cohort-12/cards/likes/${cardId}`, {
+            method: 'PUT',
+            headers: {
+                authorization: 'a737011d-02cf-4531-980a-f0cf56195ed9'
+            }
+        })
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(`Ошибка: ${res.status} ${res.statusText}`);
+            })
+            .then((data) => data);
+    }
+
+    deleteLike(cardId) {
+        return fetch(`https://mesto.nomoreparties.co/v1/cohort-12/cards/likes/${cardId}`, {
+            method: 'DELETE',
+            headers: {
+                authorization: 'a737011d-02cf-4531-980a-f0cf56195ed9'
+            }
+        })
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(`Ошибка: ${res.status} ${res.statusText}`);
+            })
+            .then((data) => data);
+    }
 }

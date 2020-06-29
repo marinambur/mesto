@@ -1,6 +1,7 @@
 import '../pages/index.css';
 import {Card} from '../components/Card.js';
 import {PopupWithImage} from "../components/PopupWithImage.js";
+import {Popup} from "../components/Popup.js";
 import {Section} from "../components/Section.js";
 import {PopupWithForm} from "../components/PopupWithForm.js";
 import {UserInfo} from "../components/UserInfo.js";
@@ -13,6 +14,7 @@ const button = document.querySelector(".profile__button-small"); //находи�
 const cardListSelector = document.querySelector('.grid');
 const popupPictureAdd = document.getElementById("picture-add"); //id попапов
 const popupInformation = document.getElementById("information");
+const popupSure = document.getElementById("sure");
 export const popupPictureBig = document.getElementById("picture-big");
 export const forms = Array.from(document.querySelectorAll('.popup__container')); // массив форм
 const template = document.getElementById('card-template');
@@ -112,15 +114,49 @@ api.getInitialCards()
 
 const CardList = new Section({
     renderer: (item) => {
-        const card = new Card(template, {
+        const card = new Card(template,  () => api.putLike(item._id),() => api.deleteLike(item._id),{
             data: item, handleCardClick: () => {
                 popupBigPicture.open(item);
             }
-        });
+        }, () => surePopup.submit(item._id));
         const cardElement = card.generateCard();
         CardList.setItem(cardElement);
     }
 }, cardListSelector);
+
+const surePopup = new Popup(popupSure);
+surePopup.submit = function (_id) {
+    surePopup.open();
+    popupSure.addEventListener('submit', evt => {
+        evt.preventDefault();
+        document.getElementById(_id).remove();
+        //document.querySelector(`div[data-id= "${_id}"]`).remove();
+        api.deleteCard(_id);
+        this.close();
+    });
+};
+
+/* export const openSurePopup = (_id) => {
+    console.log('test2')
+    console.log(_id)
+    surePopup.open();
+    //api.deleteCard(id);
+}
+*/
+/*export const surePopup = new PopupWithForm(popupSure, {
+
+    submitForm: (id) => {
+
+       // popupSure.addEventListener('submit', (evt) => {
+          //  console.log(popupSure.addEventListener('submit', (evt)));
+           // evt.preventDefault();
+           // document.querySelector(`div[data-id= "${_id}"]`).remove();
+            api.deleteCard(id);
+            this.close();
+       // });
+    },
+});*/
+
 
 
 plus.addEventListener("click", () => openPicForm());

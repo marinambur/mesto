@@ -137,16 +137,61 @@
             <h3 class="popup__name"></h3>
         </div>
     </section>
+
+
+    <section class="popup popup__sure" id="sure">
+        <div class="popup__container">
+            <button class="popup__button-close" type="button">
+                <img class="popup__cross" src="images/crest.svg" alt="Закрыть"/>
+            </button>
+            <h2 class="form__heading form__heading_sure">Вы уверены?</h2>
+            <form>
+                <button type="submit" class="form__save form__save_sure">Да</button>
+            </form>
+        </div>
+    </section>
+
+    <section class="popup popup_avatar" id="avatar">
+        <div class="popup__container">
+            <button
+                    class="popup__button-close picture-add__button-close"
+                    type="button"
+            >
+                <img class="popup__cross" src="images/crest.svg" alt="Закрыть"/>
+            </button>
+
+            <form class="form form-add" name="form" method="post" action="#">
+                <h2 class="form__heading">Обновить аватар</h2>
+                <fieldset class="form__subject">
+                    <input
+                            class="text-form text-form_subject place-form_link"
+                            type="url"
+                            name="firstname"
+                            id="link-avatar"
+                            required
+                            placeholder="Ссылка на картинку"
+                    />
+                </fieldset>
+                <span id="link-avatar-error" class="form__error"></span>
+                <button type="submit" class="form__save">Сохранить</button>
+            </form>
+        </div>
+    </section>
+
+
 </div>
 <template id="card-template">
-    <div class="card">
+    <div class="card" id="">
         <button type="button" class="card__delete"></button>
         <a class="card__picture" href="#">
             <img data-name="" class="card__item" alt=""/>
         </a>
         <div class="card__text">
             <h3 class="card__header"></h3>
-            <button type="button" class="card__heart"></button>
+            <div class="card__likes">
+                <button type="button" class="card__heart"></button>
+                <span class="card__span-like"></span>
+            </div>
         </div>
     </div>
 </template>

@@ -4,6 +4,7 @@
 @import url(__subject/form__subject.css);
 @import url(./__heading/form__heading.css);
 @import url(./__error/form__error.css);
+@import url(./__save/_sure/form__save_sure.css);
 .form {
     display: flex;
     justify-content: center;
