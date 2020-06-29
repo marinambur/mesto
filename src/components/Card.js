@@ -17,6 +17,7 @@ export class Card {
         this._picture = data.link;
         this._likes = data.likes;
         this._id = data._id;
+        this._owner = data.owner._id;
         this._putLike = putLike;
         this._deleteLike = deleteLike;
         this._cardSelector = cardSelector;
@@ -36,6 +37,17 @@ export class Card {
         return this._element;
     }
 
+    _whoIsOwner(_owner) {
+        //console.log(this._owner);
+        console.log(this._owner === '60f3480b45ce6754456f4f17');
+        if (this._owner === '60f3480b45ce6754456f4f17') {
+            console.log(_owner);
+        } else {
+            this._element.querySelector('.card__delete').classList.add('card__delete_invisible');
+            console.log(this._element);
+        }
+    }
+
     /*_cardClickHandler (evt) {
         if (evt.target.classList.contains('card__heart')) {
 
@@ -44,13 +56,13 @@ export class Card {
     }*/
 
     // функция удаления картчоки
-    _cardDelete () {
+    _cardDelete() {
         this._deleteCard(); // коллбэк для удаления карточки с сервера
         this._element.removeEventListener('click', this._cardHandler); // удаляем слушатели
     };
 
     // функция определяет клики по карточке
-    _cardClickHandler (evt) {
+    _cardClickHandler(evt) {
         if (evt.target.classList.contains('card__delete')) {  // удаление
             this._cardDelete();
         }
@@ -82,52 +94,51 @@ export class Card {
         cardItem.src = this._picture;
         cardItem.alt = this._name;
         cardHeader.textContent = this._name;
+        this._whoIsOwner(this._owner);
         return this._element;
     }
 
 
-/*_surePopup(this._id) {
-    (document.getElementById("sure").classList.add("popup_opened"));
-    console.log(document.getElementById("sure").classList);
-    console.log(document.getElementById("sure"))
-    const popupSelector = document.getElementById("sure");
-    //console.log(this._element.querySelector('.form__save'))
-    const formSure = popupSelector.querySelector(".form__save");
-    console.log(formSure);
+    /*_surePopup(this._id) {
+        (document.getElementById("sure").classList.add("popup_opened"));
+        console.log(document.getElementById("sure").classList);
+        console.log(document.getElementById("sure"))
+        const popupSelector = document.getElementById("sure");
+        //console.log(this._element.querySelector('.form__save'))
+        const formSure = popupSelector.querySelector(".form__save");
+        console.log(formSure);
 
-    function submitSure(id) {
-        //evt.preventDefault();
-        location.reload();
-        this._deleteCard(id)
-    }
-    formSure.addEventListener("submit", popupSelector.addEventListener('submit', () => submitSure(this._id),  {once: true}));
-}*/
-
-
+        function submitSure(id) {
+            //evt.preventDefault();
+            location.reload();
+            this._deleteCard(id)
+        }
+        formSure.addEventListener("submit", popupSelector.addEventListener('submit', () => submitSure(this._id),  {once: true}));
+    }*/
 
 
-_deleteCard1(id) {
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-12/cards/${id}`,{
-        method: 'DELETE',
-        baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-12',
-        headers: {
-            authorization: 'a737011d-02cf-4531-980a-f0cf56195ed9',
-            'Content-Type': 'application/json'
-        },
+    _deleteCard1(id) {
+        return fetch(`https://mesto.nomoreparties.co/v1/cohort-12/cards/${id}`, {
+            method: 'DELETE',
+            baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-12',
+            headers: {
+                authorization: 'a737011d-02cf-4531-980a-f0cf56195ed9',
+                'Content-Type': 'application/json'
+            },
 
-    })
-        .then(this._element.remove())
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`error${res.status}`);
-        });
+        })
+            .then(this._element.remove())
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(`error${res.status}`);
+            });
 
-    //api.deleteCard()
-    //
+        //api.deleteCard()
+        //
 
-};
+    };
 
 
     /*_toggleLike (evt) {
@@ -143,7 +154,6 @@ _deleteCard1(id) {
     };*/
 
     _showLike() {
-        console.log(this._element.querySelector('.card__heart').classList.contains('card__heart-active'));
         if (this._element.querySelector('.card__heart').classList.contains('card__heart-active')) {
 //if (this._element.querySelector('.card__heart')).contains() ===true;
             //evt.target.classList.remove('card__heart-active');
@@ -152,7 +162,7 @@ _deleteCard1(id) {
             this._deleteLike(this._id);
             return;
         }
-       // evt.target.classList.add('card__heart-active');  // добавляем модификатор
+        // evt.target.classList.add('card__heart-active');  // добавляем модификатор
         this._element.querySelector('.card__heart').classList.add("card__heart-active");
         this._putLike(this._id);
         this._element.querySelector('.card__span-like').textContent = this._likes.length += 1;
