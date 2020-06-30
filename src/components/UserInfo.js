@@ -1,5 +1,5 @@
 
-
+const userAvatar = document.querySelector('.profile__avatar');
 export class UserInfo {
     constructor(author) {
         this._name = author.profileAuthor;
@@ -20,9 +20,17 @@ export class UserInfo {
     setUserInfo(data) {
         this._name.textContent = data.name;
         this._info.textContent = data.about;
-        this._avatar.textContent = data.avatar;
+        this._avatar.src= data.avatar;
+        userAvatar.src = data.avatar;
     }
 
+
+    setUser(user) {
+        this._name.textContent = user.name;
+        this._info.textContent = user.about;
+        //this._profileAuthor.id = user._id;
+        this._avatar.src = user.avatar;
+    }
 
 
 }

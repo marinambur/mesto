@@ -21,8 +21,9 @@
         <img
                 class="profile__avatar"
                 src="images/kusto_pic.jpg"
-                alt="Портрет Кусто"
+                alt="Аватарка"
         />
+        <div class="profile__avatar_hover"></div>
         <div class="profile__container">
             <div class="profile__info">
                 <h1 class="profile__title">Жак-Ив&nbsp;Кусто</h1>
@@ -56,7 +57,7 @@
                     <input
                             class="text-form text-form_name"
                             type="text"
-                            name="firstname"
+                            name="name"
                             id="name-input"
                             required
                             pattern="^[A-Za-zА-Яа-я\s-]+$"
@@ -70,7 +71,7 @@
                     <input
                             class="text-form text-form_subject"
                             type="text"
-                            name="firstname"
+                            name="link"
                             id="profession"
                             required
                             pattern="^[A-Za-zА-Яа-я\s-]+$"
@@ -99,7 +100,7 @@
                     <input
                             class="text-form text-form_name place-form_name"
                             type="text"
-                            name="firstname"
+                            name="name"
                             id="name-place"
                             required
                             pattern="^[A-Za-zА-Яа-я\s-]+$"
@@ -113,7 +114,7 @@
                     <input
                             class="text-form text-form_subject place-form_link"
                             type="url"
-                            name="firstname"
+                            name="link"
                             id="link-place"
                             required
                             placeholder="Ссылка на картинку"
@@ -164,9 +165,9 @@
                 <h2 class="form__heading">Обновить аватар</h2>
                 <fieldset class="form__subject">
                     <input
-                            class="text-form text-form_subject place-form_link"
+                            class="text-form text-form_subject place-form_link text-form__avatar"
                             type="url"
-                            name="firstname"
+                            name="link"
                             id="link-avatar"
                             required
                             placeholder="Ссылка на картинку"

@@ -39,12 +39,9 @@ export class Card {
 
     _whoIsOwner(_owner) {
         //console.log(this._owner);
-        console.log(this._owner === '60f3480b45ce6754456f4f17');
         if (this._owner === '60f3480b45ce6754456f4f17') {
-            console.log(_owner);
         } else {
             this._element.querySelector('.card__delete').classList.add('card__delete_invisible');
-            console.log(this._element);
         }
     }
 
@@ -93,8 +90,14 @@ export class Card {
         const cardHeader = this._element.querySelector('.card__header');
         cardItem.src = this._picture;
         cardItem.alt = this._name;
+        const cardItemLikes = this._likes;
         cardHeader.textContent = this._name;
-        this._whoIsOwner(this._owner);
+        this._whoIsOwner(this._owner)
+        console.log(this._likes);
+        if (this._likes.find(item => item._id === '60f3480b45ce6754456f4f17')) {
+       // if (this._likes._id === this._owner) {
+            this._element.querySelector('.card__heart').classList.add('card__heart_active');
+        }
         return this._element;
     }
 

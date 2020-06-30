@@ -130,4 +130,33 @@ export class Api {
             })
             .then((data) => data);
     }
+
+
+    _writeUserAvatar (data) {
+        document.querySelector('.profile__avatar').src = data.avatar;
+    }
+
+    setUserAvatar (userAvatar) {
+        return fetch('https://mesto.nomoreparties.co/v1/cohort-12/users/me/avatar', {
+                method: 'PATCH',
+                headers: {
+                    authorization: 'a737011d-02cf-4531-980a-f0cf56195ed9',
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    avatar: userAvatar
+                })
+            }
+        )
+
+
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(`Ошибка: ${res.status} ${res.statusText}`);
+            })
+            .then((data) => this._writeUserAvatar(data))
+
+    }
 }

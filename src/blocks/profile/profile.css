@@ -12,6 +12,7 @@
     width: 68.9%;
     justify-content: space-between;
     max-width: 882px;
+    position: relative;
 }
 
 @media (max-width: 1080px) {

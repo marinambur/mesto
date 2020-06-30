@@ -15,13 +15,16 @@ const cardListSelector = document.querySelector('.grid');
 const popupPictureAdd = document.getElementById("picture-add"); //id попапов
 const popupInformation = document.getElementById("information");
 const popupSure = document.getElementById("sure");
+const popupAvatar = document.getElementById("avatar");
 export const popupPictureBig = document.getElementById("picture-big");
 export const forms = Array.from(document.querySelectorAll('.popup__container')); // массив форм
 const template = document.getElementById('card-template');
 const popup = document.querySelector(".popup");
 const formaElement = popup.querySelector(".form");
+const avatarInput = formaElement.querySelector(".text-form__avatar");
 const nameInput = formaElement.querySelector(".text-form_name"); //находим поля форм
 const jobInput = document.querySelector(".text-form_subject");
+const editAvatar = document.querySelector('.profile__avatar_hover');
 export const formObject = {
     formSelector: ".form",
     inputSelector: ".text-form",
@@ -79,6 +82,7 @@ api.getUserInfo()
     .then((user) => {
         userInfo.getUserInfo(user.name, user.about, user.avatar);
         userInfo.setUserInfo(user);
+
     })
     .catch((err) => {
         console.log(err);
@@ -114,7 +118,7 @@ api.getInitialCards()
 
 const CardList = new Section({
     renderer: (item) => {
-        const card = new Card(template,  () => api.putLike(item._id),() => api.deleteLike(item._id),{
+        const card = new Card(template, () => api.putLike(item._id), () => api.deleteLike(item._id), {
             data: item, handleCardClick: () => {
                 popupBigPicture.open(item);
             }
@@ -136,29 +140,68 @@ surePopup.submit = function (_id) {
     });
 };
 
-/* export const openSurePopup = (_id) => {
-    console.log('test2')
-    console.log(_id)
-    surePopup.open();
-    //api.deleteCard(id);
-}
-*/
-/*export const surePopup = new PopupWithForm(popupSure, {
 
-    submitForm: (id) => {
+/*const avatarPopup = new PopupWithForm('.popup__avatar', (formData) => {
+    api.setUserAvatar(formData)
+        .finally(textWhileLoading(true, '#avatar-form'))
+});
+// ставим слушатель на редактирование аватара
+editAvatar.addEventListener('click', () => {
+    textWhileLoading(false, '#avatar-form');
+    avatarPopup.open();
+})*/
 
-       // popupSure.addEventListener('submit', (evt) => {
-          //  console.log(popupSure.addEventListener('submit', (evt)));
-           // evt.preventDefault();
-           // document.querySelector(`div[data-id= "${_id}"]`).remove();
-            api.deleteCard(id);
-            this.close();
-       // });
-    },
+/*const changeAvatar = new PopupWithForm(popupAvatar, {
+    submitForm: () => {
+        api.setUserAvatar(avatarInput.value)
+
+        editAvatar.addEventListener('click', () => {
+            changeAvatar.open();
+        })
+    }
 });*/
 
+        const changeAvatar = new PopupWithForm(popupAvatar,  {
+            submitForm: (item) => {
+                api.setUserAvatar(item.link)
+                    .then(() => {
+                        changeAvatar.close();
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
 
 
-plus.addEventListener("click", () => openPicForm());
-button.addEventListener("click", () => openInfoForm());
+                            }
+
+        });
+        editAvatar.addEventListener('click', () => {
+            changeAvatar.open();
+        })
+
+
+        /* export const openSurePopup = (_id) => {
+            console.log('test2')
+            console.log(_id)
+            surePopup.open();
+            //api.deleteCard(id);
+        }
+        */
+        /*export const surePopup = new PopupWithForm(popupSure, {
+
+            submitForm: (id) => {
+
+               // popupSure.addEventListener('submit', (evt) => {
+                  //  console.log(popupSure.addEventListener('submit', (evt)));
+                   // evt.preventDefault();
+                   // document.querySelector(`div[data-id= "${_id}"]`).remove();
+                    api.deleteCard(id);
+                    this.close();
+               // });
+            },
+        });*/
+
+
+        plus.addEventListener("click", () => openPicForm());
+        button.addEventListener("click", () => openInfoForm());
 
