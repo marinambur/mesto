@@ -21,7 +21,6 @@ export const forms = Array.from(document.querySelectorAll('.popup__container'));
 const template = document.getElementById('card-template');
 const popup = document.querySelector(".popup");
 const formaElement = popup.querySelector(".form");
-const avatarInput = formaElement.querySelector(".text-form__avatar");
 const nameInput = formaElement.querySelector(".text-form_name"); //находим поля форм
 const jobInput = document.querySelector(".text-form_subject");
 const editAvatar = document.querySelector('.profile__avatar_hover');
@@ -134,74 +133,30 @@ surePopup.submit = function (_id) {
     popupSure.addEventListener('submit', evt => {
         evt.preventDefault();
         document.getElementById(_id).remove();
-        //document.querySelector(`div[data-id= "${_id}"]`).remove();
         api.deleteCard(_id);
         this.close();
     });
 };
 
+const changeAvatar = new PopupWithForm(popupAvatar, {
+    submitForm: (item) => {
+        api.setUserAvatar(item.link)
+            .then(() => {
+                changeAvatar.close();
+            })
+            .catch((err) => {
+                console.log(err);
+            })
 
-/*const avatarPopup = new PopupWithForm('.popup__avatar', (formData) => {
-    api.setUserAvatar(formData)
-        .finally(textWhileLoading(true, '#avatar-form'))
-});
-// ставим слушатель на редактирование аватара
-editAvatar.addEventListener('click', () => {
-    textWhileLoading(false, '#avatar-form');
-    avatarPopup.open();
-})*/
 
-/*const changeAvatar = new PopupWithForm(popupAvatar, {
-    submitForm: () => {
-        api.setUserAvatar(avatarInput.value)
-
-        editAvatar.addEventListener('click', () => {
-            changeAvatar.open();
-        })
     }
-});*/
 
-        const changeAvatar = new PopupWithForm(popupAvatar,  {
-            submitForm: (item) => {
-                api.setUserAvatar(item.link)
-                    .then(() => {
-                        changeAvatar.close();
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    })
+});
+editAvatar.addEventListener('click', () => {
+    changeAvatar.open();
+})
 
 
-                            }
-
-        });
-        editAvatar.addEventListener('click', () => {
-            changeAvatar.open();
-        })
-
-
-        /* export const openSurePopup = (_id) => {
-            console.log('test2')
-            console.log(_id)
-            surePopup.open();
-            //api.deleteCard(id);
-        }
-        */
-        /*export const surePopup = new PopupWithForm(popupSure, {
-
-            submitForm: (id) => {
-
-               // popupSure.addEventListener('submit', (evt) => {
-                  //  console.log(popupSure.addEventListener('submit', (evt)));
-                   // evt.preventDefault();
-                   // document.querySelector(`div[data-id= "${_id}"]`).remove();
-                    api.deleteCard(id);
-                    this.close();
-               // });
-            },
-        });*/
-
-
-        plus.addEventListener("click", () => openPicForm());
-        button.addEventListener("click", () => openInfoForm());
+plus.addEventListener("click", () => openPicForm());
+button.addEventListener("click", () => openInfoForm());
 

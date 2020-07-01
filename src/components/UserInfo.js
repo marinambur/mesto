@@ -24,13 +24,4 @@ export class UserInfo {
         userAvatar.src = data.avatar;
     }
 
-
-    setUser(user) {
-        this._name.textContent = user.name;
-        this._info.textContent = user.about;
-        //this._profileAuthor.id = user._id;
-        this._avatar.src = user.avatar;
-    }
-
-
 }

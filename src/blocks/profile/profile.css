@@ -7,7 +7,7 @@
 @import url(./__button-small/profile__button-small.css);
 @import url(./__button-large/profile__button-large.css);
 .profile {
-    margin: 36px auto 47.25px auto;
+    margin: 36px auto 47px auto;
     display: flex;
     width: 68.9%;
     justify-content: space-between;

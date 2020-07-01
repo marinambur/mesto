@@ -62,20 +62,9 @@ export class Api {
             });
     }
 
-      /* deleteCard(id) {
-            return fetch(`https://mesto.nomoreparties.co/v1/cohort-12/cards/${this.id}`,{
-                method: 'DELETE'
-            })
-                .then((res) => {
-                    if (res.ok) {
-                        return res.json();
-                    }
-                    return Promise.reject(`error${res.status}`);
-                });
-        }*/
 
     deleteCard(id) {
-        return fetch(`https://mesto.nomoreparties.co/v1/cohort-12/cards/${id}`,{
+        return fetch(`https://mesto.nomoreparties.co/v1/cohort-12/cards/${id}`, {
             method: 'DELETE',
             baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-12',
             headers: {
@@ -84,16 +73,12 @@ export class Api {
             },
 
         })
-            //.then (this._element.remove())
             .then((res) => {
                 if (res.ok) {
                     return res.json();
                 }
                 return Promise.reject(`error${res.status}`);
             });
-
-        //api.deleteCard()
-        //
 
     };
 
@@ -132,11 +117,11 @@ export class Api {
     }
 
 
-    _writeUserAvatar (data) {
+    _writeUserAvatar(data) {
         document.querySelector('.profile__avatar').src = data.avatar;
     }
 
-    setUserAvatar (userAvatar) {
+    setUserAvatar(userAvatar) {
         return fetch('https://mesto.nomoreparties.co/v1/cohort-12/users/me/avatar', {
                 method: 'PATCH',
                 headers: {

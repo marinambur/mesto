@@ -1,6 +1,5 @@
 import {Api} from "./Api.js";
-import {Popup} from "./Popup.js";
-/* import {openSurePopup} from "../pages/index.js"; */
+
 export const token = {
     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-12',
     headers: {
@@ -45,14 +44,6 @@ export class Card {
         }
     }
 
-    /*_cardClickHandler (evt) {
-        if (evt.target.classList.contains('card__heart')) {
-
-            this._showLike(evt);
-        }
-    }*/
-
-    // функция удаления картчоки
     _cardDelete() {
         this._deleteCard(); // коллбэк для удаления карточки с сервера
         this._element.removeEventListener('click', this._cardHandler); // удаляем слушатели
@@ -73,8 +64,6 @@ export class Card {
             this._showLike();
         }); //слушатель сердечка
         this._element.querySelector('.card__delete').addEventListener('click', () => {
-            //this._deleteCard(this._id); //слушатель мусорного ведра
-            //openSurePopup(this._id);
         });
         this._element.querySelector('.card__item').addEventListener('click', () => {
             this._handleCardClick(); //слушатель увеличенной карточки
@@ -82,96 +71,29 @@ export class Card {
     }
 
     generateCard() {
-        // Запишем разметку в приватное поле _element.
-        // Так у других элементов появится доступ к ней.
         this._getTemplate();
         this._setEventListeners();
         const cardItem = this._element.querySelector('.card__item');
         const cardHeader = this._element.querySelector('.card__header');
         cardItem.src = this._picture;
         cardItem.alt = this._name;
-        const cardItemLikes = this._likes;
         cardHeader.textContent = this._name;
         this._whoIsOwner(this._owner)
-        console.log(this._likes);
         if (this._likes.find(item => item._id === '60f3480b45ce6754456f4f17')) {
-       // if (this._likes._id === this._owner) {
-            this._element.querySelector('.card__heart').classList.add('card__heart_active');
+            this._element.querySelector('.card__heart').classList.add('card__heart-active');
         }
         return this._element;
     }
 
-
-    /*_surePopup(this._id) {
-        (document.getElementById("sure").classList.add("popup_opened"));
-        console.log(document.getElementById("sure").classList);
-        console.log(document.getElementById("sure"))
-        const popupSelector = document.getElementById("sure");
-        //console.log(this._element.querySelector('.form__save'))
-        const formSure = popupSelector.querySelector(".form__save");
-        console.log(formSure);
-
-        function submitSure(id) {
-            //evt.preventDefault();
-            location.reload();
-            this._deleteCard(id)
-        }
-        formSure.addEventListener("submit", popupSelector.addEventListener('submit', () => submitSure(this._id),  {once: true}));
-    }*/
-
-
-    _deleteCard1(id) {
-        return fetch(`https://mesto.nomoreparties.co/v1/cohort-12/cards/${id}`, {
-            method: 'DELETE',
-            baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-12',
-            headers: {
-                authorization: 'a737011d-02cf-4531-980a-f0cf56195ed9',
-                'Content-Type': 'application/json'
-            },
-
-        })
-            .then(this._element.remove())
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`error${res.status}`);
-            });
-
-        //api.deleteCard()
-        //
-
-    };
-
-
-    /*_toggleLike (evt) {
-        if (evt.target.classList.contains('elements__like_active')) {
-            evt.target.classList.remove('elements__like_active');  // удалем модификатор
-            this._element.querySelector('.elements__like-counter').textContent = this._likes.length -= 1;
-            this._deleteLike(this._id);
-            return;
-        }
-        evt.target.classList.add('elements__like_active');  // добавляем модификатор
-        this._putLike(this._id);
-        this._element.querySelector('.elements__like-counter').textContent = this._likes.length += 1;
-    };*/
-
     _showLike() {
         if (this._element.querySelector('.card__heart').classList.contains('card__heart-active')) {
-//if (this._element.querySelector('.card__heart')).contains() ===true;
-            //evt.target.classList.remove('card__heart-active');
             this._element.querySelector('.card__heart').classList.remove("card__heart-active");
             this._element.querySelector('.card__span-like').textContent = this._likes.length -= 1;
             this._deleteLike(this._id);
             return;
         }
-        // evt.target.classList.add('card__heart-active');  // добавляем модификатор
         this._element.querySelector('.card__heart').classList.add("card__heart-active");
         this._putLike(this._id);
         this._element.querySelector('.card__span-like').textContent = this._likes.length += 1;
-        //функция закрашивания сердечка по нажатию
-        //this._element.querySelector('.card__heart').classList.toggle("card__heart-active");
-        //this._putLike(this._id);
-        //event target помогает понять какое сердечко красить
     }
 }
