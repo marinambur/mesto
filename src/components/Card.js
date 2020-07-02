@@ -1,15 +1,3 @@
-import {Api} from "./Api.js";
-
-export const token = {
-    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-12',
-    headers: {
-        authorization: 'a737011d-02cf-4531-980a-f0cf56195ed9',
-        'Content-Type': 'application/json'
-    },
-};
-
-export const api = new Api(token);
-
 export class Card {
     constructor(cardSelector, putLike, deleteLike, {data, handleCardClick}, deleteCard) {
         this._name = data.name;

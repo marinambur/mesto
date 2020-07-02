@@ -14,7 +14,6 @@ export class PopupWithForm extends Popup {
 
     _setSubmitForm(evt) {
         evt.preventDefault();
-        location.reload();
         this.submitForm(this._getInputValues());
     }
 
@@ -24,15 +23,13 @@ export class PopupWithForm extends Popup {
         this._inputList.forEach(input => {
             this._formValues[input.name] = input.value;
         });
-        console.log(this._formValues)
         return this._formValues;
 
     }
 
-
     close() {
         this.popupSelector.removeEventListener('submit', this.submitForm);
-        this.popupSelector.querySelector('form').reset();//по условию задания close() должен тут перезаписываться и сбрасывать форму
+        this.popupSelector.querySelector('form').reset();
         super.close();
     }
 }

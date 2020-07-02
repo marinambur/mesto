@@ -28,7 +28,7 @@ export class Api {
             });
     }
 
-    uploadUserInfo(userName, userJob) {
+    updateUserInfo(userName, userJob) {
         return fetch(`${this.baseUrl}/users/me`, {
             method: 'PATCH',
             headers: this.headers,
@@ -45,7 +45,7 @@ export class Api {
             });
     }
 
-    toAddNewCard(cardName, cardLink) {
+    addNewCard(cardName, cardLink) {
         return fetch(`${this.baseUrl}/cards`, {
             method: 'POST',
             headers: this.headers,
@@ -64,13 +64,9 @@ export class Api {
 
 
     deleteCard(id) {
-        return fetch(`https://mesto.nomoreparties.co/v1/cohort-12/cards/${id}`, {
+        return fetch(`${this.baseUrl}/cards/${id}`, {
             method: 'DELETE',
-            baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-12',
-            headers: {
-                authorization: 'a737011d-02cf-4531-980a-f0cf56195ed9',
-                'Content-Type': 'application/json'
-            },
+            headers: this.headers,
 
         })
             .then((res) => {
@@ -85,11 +81,9 @@ export class Api {
 
     putLike(cardId) {
 
-        return fetch(`https://mesto.nomoreparties.co/v1/cohort-12/cards/likes/${cardId}`, {
+        return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
             method: 'PUT',
-            headers: {
-                authorization: 'a737011d-02cf-4531-980a-f0cf56195ed9'
-            }
+            headers: this.headers
         })
             .then((res) => {
                 if (res.ok) {
@@ -101,11 +95,9 @@ export class Api {
     }
 
     deleteLike(cardId) {
-        return fetch(`https://mesto.nomoreparties.co/v1/cohort-12/cards/likes/${cardId}`, {
+        return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
             method: 'DELETE',
-            headers: {
-                authorization: 'a737011d-02cf-4531-980a-f0cf56195ed9'
-            }
+            headers: this.headers
         })
             .then((res) => {
                 if (res.ok) {
@@ -116,18 +108,10 @@ export class Api {
             .then((data) => data);
     }
 
-
-    _writeUserAvatar(data) {
-        document.querySelector('.profile__avatar').src = data.avatar;
-    }
-
     setUserAvatar(userAvatar) {
-        return fetch('https://mesto.nomoreparties.co/v1/cohort-12/users/me/avatar', {
+        return fetch(`${this.baseUrl}/users/me/avatar`, {
                 method: 'PATCH',
-                headers: {
-                    authorization: 'a737011d-02cf-4531-980a-f0cf56195ed9',
-                    'Content-type': 'application/json'
-                },
+                headers: this.headers,
                 body: JSON.stringify({
                     avatar: userAvatar
                 })
@@ -141,7 +125,6 @@ export class Api {
                 }
                 return Promise.reject(`Ошибка: ${res.status} ${res.statusText}`);
             })
-            .then((data) => this._writeUserAvatar(data))
 
     }
 }

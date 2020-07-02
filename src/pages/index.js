@@ -10,7 +10,7 @@ import {startValidation} from "../components/utils/functions.js";
 import {eraser} from "../components/utils/functions.js";
 
 const plus = document.querySelector(".profile__button-large");
-const button = document.querySelector(".profile__button-small"); //находим кнопки
+export const button = document.querySelector(".profile__button-small"); //находим кнопки
 const cardListSelector = document.querySelector('.grid');
 const popupPictureAdd = document.getElementById("picture-add"); //id попапов
 const popupInformation = document.getElementById("information");
@@ -44,23 +44,6 @@ export const token = {
 export const api = new Api(token);
 
 
-const openFormPic = new PopupWithForm(popupPictureAdd, {
-
-    submitForm: (item) => {
-        api.toAddNewCard(item.name, item.link)
-            .catch((err) => {
-                console.log(err);
-            });
-        const card = new Card(template, {
-            data: item, handleCardClick: () => {
-                popupBigPicture.open(item);
-            }
-        });
-        const cardElement = card.generateCard();
-        CardList.setItem(cardElement);
-        openFormPic.close();
-    }
-},);
 const popupBigPicture = new PopupWithImage(popupPictureBig);
 const openPicForm = function () {
     eraser();
@@ -88,14 +71,14 @@ api.getUserInfo()
     });
 
 const openFormInfo = new PopupWithForm(popupInformation, {
-    submitForm: () => {
-        api.uploadUserInfo(nameInput.value, jobInput.value)
-            .then(data => userInfo.setUserInfo(data.name, data.about));
-        openFormInfo._setSubmitForm();
-        console.log(nameInput.value, jobInput.value)
-            .catch((err) => {
-                console.log(err);
-            });
+    submitForm: (item) => {
+        api.updateUserInfo(item.name, item.link)
+            .then((res) => {
+                userInfo.setUserInfo(res)
+                openFormInfo.close()})
+                    .catch((err) => {
+                        console.log(err);
+                    });
 
     },
 });
@@ -109,13 +92,13 @@ const openInfoForm = () => {
 }
 api.getInitialCards()
     .then((items) => {
-        CardList.renderItems(items);
+        cardList.renderItems(items);
     })
     .catch((err) => {
         console.log(err);
     });
 
-const CardList = new Section({
+const cardList = new Section({//items передаются из api выше в api.getInitialCards()
     renderer: (item) => {
         const card = new Card(template, () => api.putLike(item._id), () => api.deleteLike(item._id), {
             data: item, handleCardClick: () => {
@@ -123,9 +106,29 @@ const CardList = new Section({
             }
         }, () => surePopup.submit(item._id));
         const cardElement = card.generateCard();
-        CardList.setItem(cardElement);
+        cardList.setItem(cardElement);
     }
 }, cardListSelector);
+
+
+const openFormPic = new PopupWithForm(popupPictureAdd, {
+    submitForm: (item) => {
+        api.addNewCard(item.name, item.link)
+            .then((res) => {
+                const card = new Card(template, () => api.putLike(res._id), () => api.deleteLike(res._id), {
+                    data: res, handleCardClick: () => {
+                        popupBigPicture.open(res);
+                    }
+                }, () => surePopup.submit(res._id));
+                const cardElement = card.generateCard();
+                cardList.setItem(cardElement);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+        openFormPic.close();
+    }
+},);
 
 const surePopup = new Popup(popupSure);
 surePopup.submit = function (_id) {
@@ -141,6 +144,9 @@ surePopup.submit = function (_id) {
 const changeAvatar = new PopupWithForm(popupAvatar, {
     submitForm: (item) => {
         api.setUserAvatar(item.link)
+            .then((item) => {
+                userInfo.writeUserAvatar(item);
+            })
             .then(() => {
                 changeAvatar.close();
             })
