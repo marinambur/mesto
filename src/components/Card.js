@@ -25,7 +25,6 @@ export class Card {
     }
 
     _whoIsOwner(_owner) {
-        //console.log(this._owner);
         if (this._owner === '60f3480b45ce6754456f4f17') {
         } else {
             this._element.querySelector('.card__delete').classList.add('card__delete_invisible');

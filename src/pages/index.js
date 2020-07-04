@@ -8,6 +8,7 @@ import {UserInfo} from "../components/UserInfo.js";
 import {Api} from "../components/Api.js";
 import {startValidation} from "../components/utils/functions.js";
 import {eraser} from "../components/utils/functions.js";
+import {renderLoading} from "../components/utils/utils.js";
 
 const plus = document.querySelector(".profile__button-large");
 export const button = document.querySelector(".profile__button-small"); //находим кнопки
@@ -16,6 +17,8 @@ const popupPictureAdd = document.getElementById("picture-add"); //id попап�
 const popupInformation = document.getElementById("information");
 const popupSure = document.getElementById("sure");
 const popupAvatar = document.getElementById("avatar");
+const formInfoButton = popupInformation.querySelector('.form__save');
+const formAvatarButton = popupAvatar.querySelector('.form__save');
 export const popupPictureBig = document.getElementById("picture-big");
 export const forms = Array.from(document.querySelectorAll('.popup__container')); // массив форм
 const template = document.getElementById('card-template');
@@ -72,18 +75,21 @@ api.getUserInfo()
 
 const openFormInfo = new PopupWithForm(popupInformation, {
     submitForm: (item) => {
+        renderLoading(popupInformation);
         api.updateUserInfo(item.name, item.link)
             .then((res) => {
                 userInfo.setUserInfo(res)
-                openFormInfo.close()})
-                    .catch((err) => {
-                        console.log(err);
-                    });
+                openFormInfo.close()
+            })
+            .catch((err) => {
+                console.log(err);
+            });
 
     },
 });
 
 const openInfoForm = () => {
+    formInfoButton.textContent = 'Сохранить';
     const infoUser = userInfo.getUserInfo();
     nameInput.value = infoUser.name;
     jobInput.value = infoUser.info;
@@ -143,6 +149,7 @@ surePopup.submit = function (_id) {
 
 const changeAvatar = new PopupWithForm(popupAvatar, {
     submitForm: (item) => {
+        renderLoading(popupAvatar);
         api.setUserAvatar(item.link)
             .then((item) => {
                 userInfo.writeUserAvatar(item);
@@ -159,6 +166,7 @@ const changeAvatar = new PopupWithForm(popupAvatar, {
 
 });
 editAvatar.addEventListener('click', () => {
+    formAvatarButton.textContent = 'Сохранить';
     changeAvatar.open();
 })
 
